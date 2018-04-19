@@ -3,14 +3,14 @@
 
 #include <stdint.h>
 
-struct fractal {
-    char name[];
+typedef struct fractal {
+    char name[65];
     float a;
     float b;
     unsigned int width;
     unsigned int height;
-    uint32_t **values;
-};
+    int *values;
+} fractal_t;
 
 /*
  * fractal_new: alloue une nouvelle structure fractal
