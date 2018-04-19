@@ -1,8 +1,15 @@
 #ifndef _FRACTAL_H
 #define _FRACTAL_H
 
+#include <stdint.h>
+
 struct fractal {
-    /* TODO: à remplir */
+    char name[];
+    float a;
+    float b;
+    unsigned int width;
+    unsigned int height;
+    uint32_t **values;
 };
 
 /*
