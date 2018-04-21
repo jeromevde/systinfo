@@ -6,23 +6,32 @@
 #include <memory.h>
 #include "libfractal/fractal.h"
 
+
+
+
 int main(int argc, char *argv[])
 {
-    int print = false;
-    int maxthread = 4;
-    int argIndex = 1;
+    int printAll = false; //si on a l'argument -d
+    int maxthread = 2;  //nombre de thread max par defaut
+    int argIndex = 1; // dummy variable
+
+    if (argc < 3){
+      printf("%s\n","Veuillez preciser un fichier d'entree et de sortie" );
+      exit(EXIT_FAILURE);
+    }
 
     if (strcmp( argv[argIndex], "-d")==1) {
-        print = true;
+        printAll = true;
+        printf("%s\n", "printing is true");
         argIndex++;
     }
-    int a = 3;
     if (strcmp( argv[argIndex], "--maxthreads") ==1) {
         argIndex++;
         maxthread =*(argv[argIndex]);
         argIndex++;
     }
 
+    char* outputFiles = *argv
     while (argIndex < argc - 1) {
         /* TODO */
         argIndex++;

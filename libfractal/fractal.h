@@ -4,12 +4,13 @@
 #include <stdint.h>
 
 typedef struct fractal {
-    char name[65];
+    char *name;
     float a;
     float b;
     unsigned int width;
     unsigned int height;
-    int *values;
+    int *values; // les valeurs de la fractale
+    float average; //la moyenne
 } fractal_t;
 
 /*
@@ -69,7 +70,7 @@ int fractal_get_width(const struct fractal *f);
 
 /*
  * fractal_get_height: retourne la hauteur de l'image de la fractale
- * 
+ *
  * @f: fractale
  * @return: hauteur
  */
@@ -77,7 +78,7 @@ int fractal_get_height(const struct fractal *f);
 
 /*
  * fractal_get_a: retourne la partie réelle des coordonnées de la fractale
- * 
+ *
  * @f: fractale
  * @return: partie réelle
  */
