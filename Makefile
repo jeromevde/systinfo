@@ -17,4 +17,4 @@ main: main.o $(LIBFRACTAL)
 	$(GCC) $(LDFLAGS) -o main $(LIBFRACTAL) main.o
 
 clean:
-	rm main $(LIBFRACTAL) main.o
+	@rm -rf *.o libfractal/*.o libractal/*.a main.o
