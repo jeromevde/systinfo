@@ -20,18 +20,19 @@ int main(int argc, char *argv[])
       exit(EXIT_FAILURE);
     }
 
-    if (strcmp( argv[argIndex], "-d")==1) {
+    if (strcmp( argv[argIndex], "-d") == 0) {
         printAll = true;
         printf("%s\n", "printing is true");
         argIndex++;
     }
-    if (strcmp( argv[argIndex], "--maxthreads") ==1) {
+
+    if (strcmp( argv[argIndex], "--maxthreads") == 0) {
         argIndex++;
         maxthread =*(argv[argIndex]);
         argIndex++;
     }
 
-    char* outputFiles = *argv
+    char* outputFiles = *argv;
     while (argIndex < argc - 1) {
         /* TODO */
         argIndex++;

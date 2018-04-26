@@ -1,1 +1,1 @@
-C:/cygwin64/bin/gcc.exe -g  -Wl,--enable-auto-import CMakeFiles/code.dir/main.c.o  -o code.exe -Wl,--out-implib,libcode.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
+/usr/bin/cc -g   CMakeFiles/code.dir/main.c.o  -o code 

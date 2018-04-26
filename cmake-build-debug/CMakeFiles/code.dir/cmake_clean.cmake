@@ -1,8 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/code.dir/main.c.o"
   "code.pdb"
-  "code.exe"
-  "libcode.dll.a"
+  "code"
 )
 
 # Per-language clean rules from dependency scanning.
