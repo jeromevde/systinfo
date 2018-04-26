@@ -11,24 +11,45 @@
 
 int main(int argc, char *argv[])
 {
-    int printAll = false; //si on a l'argument -d
-    int maxthread = 2;  //nombre de thread max par defaut
+    /**
+     * @var boolean : need to print all computed fractals
+     */
+    int printAll = false;
+
+    /**
+     * @var int : max amount of threads
+     */
+    int maxthreads = 2;
+
+    /**
+     * @var int : args counter
+     */
     int argIndex = 1; // dummy variable
 
+    /*
+     * At least 3 arguments must be given
+     */
     if (argc < 3){
-      printf("%s\n","Veuillez preciser un fichier d'entree et de sortie" );
-      exit(EXIT_FAILURE);
+        printf("%s\n","You must at least provide an input and an output file" );
+        exit(EXIT_FAILURE);
     }
 
-    if (strcmp( argv[argIndex], "-d") == 0) {
+    /*
+     * Is the -d arg given
+     */
+    if (strcmp(argv[argIndex], "-d") == 0) {
         printAll = true;
-        printf("%s\n", "printing is true");
+        printf("%s\n", "All fractals will be drawn");
         argIndex++;
     }
 
+    /*
+     * Is the thread amount overwritten
+     */
     if (strcmp( argv[argIndex], "--maxthreads") == 0) {
         argIndex++;
-        maxthread =*(argv[argIndex]);
+        maxthreads =*(argv[argIndex]);
+        printf("%s : %d", "Max amount of threads has been set to", maxthreads);
         argIndex++;
     }
 
