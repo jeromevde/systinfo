@@ -7,8 +7,6 @@
 #include "libfractal/fractal.h"
 
 
-
-
 int main(int argc, char *argv[])
 {
     /**
@@ -25,6 +23,8 @@ int main(int argc, char *argv[])
      * @var int : args counter
      */
     int argIndex = 1; // dummy variable
+
+    printf("%s\n", "==== Starting fractal computer ====");
 
     /*
      * At least 3 arguments must be given
@@ -48,12 +48,11 @@ int main(int argc, char *argv[])
      */
     if (strcmp( argv[argIndex], "--maxthreads") == 0) {
         argIndex++;
-        maxthreads =*(argv[argIndex]);
-        printf("%s : %d", "Max amount of threads has been set to", maxthreads);
+        maxthreads =atoi(argv[argIndex]);
+        printf("%s : %d\n", "Max amount of threads has been set to", maxthreads);
         argIndex++;
     }
 
-    char* outputFiles = *argv;
     while (argIndex < argc - 1) {
         /* TODO */
         argIndex++;
