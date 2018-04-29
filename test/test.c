@@ -1,13 +1,19 @@
 #include <stdlib.h>
+
 #include "CUnit/Basic.h"
 #include "CUnit/Console.h"
 #include "CUnit/Automated.h"
 #include <CUnit/CUnit.h>
+
 #include "../libfractal/fractal.h"
 #include "../stack/stack.h"
 
-void testDUMMY(void){
-  int a =3;
+void testGetSetValue(void) {
+	struct fractal * test = fractal_new("NULL", 1, 1, 0, 0);
+	int x = 10;
+	fractal_set_value(test, 1, 1, x);
+	CU_ASSERT_NOT_EQUAL(x, fractal_get_value(test, 1, 1));
+	fractal_free(test);
 }
 
 int init_suite1(void){
@@ -39,7 +45,7 @@ int main()
 
    /* add the tests to the suite */
    /* NOTE - ORDER IS IMPORTANT - MUST TEST fread() AFTER fprintf() */
-   if ((NULL == CU_add_test(pSuite, "test dummy", testDUMMY)) )
+   if ((NULL == CU_add_test(pSuite, "test getSetValue", testGetSetValue)) )
    {
       CU_cleanup_registry();
       return CU_get_error();
