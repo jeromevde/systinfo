@@ -74,14 +74,14 @@ void *fileReader(void *filename) {
     int lineNumber;
 
     int matched = fscanf(file, "%s %i %i %f %f\n", name, &width, &height, &a, &b);
+
     while (matched != EOF)
     {
         lineNumber++;
         if (matched == 5) {
             fractal_t * fractal = fractal_new(name, width, height, a, b);
+            printf("Added %s : %f + %f i. Image size : %i x %i\n", name, a, b, width, height);
             fractal_free(fractal);
-        } else {
-            printf("Line %d ignored\n", lineNumber);
         }
         matched = fscanf(file, "%s %i %i %f %f\n", name, &width, &height, &a, &b);
     }

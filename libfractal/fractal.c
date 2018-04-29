@@ -12,6 +12,7 @@ struct fractal *fractal_new(const char *name, int width, int height, double a, d
         return NULL;
     }
 
+    allocatedFractal->name = malloc(strlen(name) + sizeof(char));
     strncpy(allocatedFractal->name, name, strlen(name) + sizeof(char));
 
     allocatedFractal->width = width;
@@ -20,7 +21,7 @@ struct fractal *fractal_new(const char *name, int width, int height, double a, d
     allocatedFractal->a = a;
     allocatedFractal->b = b;
 
-    allocatedFractal->values = malloc(width * height * sizeof(int));
+    allocatedFractal->values = calloc(width * height, sizeof(int));
     if (allocatedFractal->values == NULL) {
         free(allocatedFractal);
         return NULL;
