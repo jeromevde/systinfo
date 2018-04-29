@@ -80,13 +80,14 @@ void *fileReader(void *filename) {
         lineNumber++;
         if (matched == 5) {
             fractal_t * fractal = fractal_new(name, width, height, a, b);
-            printf("Added %s : %f + %f i. Image size : %i x %i\n", name, a, b, width, height);
+            printf("- Added %s : %f + %fi. Image size : %i x %i\n", name, a, b, width, height);
             fractal_free(fractal);
         }
         matched = fscanf(file, "%s %i %i %f %f\n", name, &width, &height, &a, &b);
     }
 
 
+    printf("\n\n");
     pthread_exit(NULL);
 }
 
@@ -107,7 +108,12 @@ int main(int argc, char *argv[])
      */
     int argIndex = 1;
 
-    printf("%s\n", "==== Starting fractal computer ====");
+    printf(
+            "%s\n%s\n%s\n\n",
+            "===================================================================",
+            "==                  Starting fractal computer                    ==",
+            "==================================================================="
+    );
 
     /*
      * At least 3 arguments must be given
@@ -135,6 +141,7 @@ int main(int argc, char *argv[])
         printf("%s %d\n", "Max amount of threads has been set to", maxthreads);
         argIndex++;
     }
+    printf("\n\n");
 
     /**
      * @var int : total amout of files
