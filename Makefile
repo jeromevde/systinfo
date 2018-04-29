@@ -4,27 +4,28 @@ ARFLAGS = -cvq
 CFLAGS = -Wall -std=c99 -g -c
 LDFLAGS = --static -g -lSDL -lcunit -pthread
 LIBFRACTAL = libfractal/libfractal.a
+LIBSTACK = stack/stack.a
+LIBRARIES = libfractal/libfractal.a stack/stack.a
 
 all: main
-
-gdb: main_gdb
-
-
-lib:
-	cd libfractal && make
-	@echo "Library made"
 
 main.o: main.c
 	@$(GCC) $(CFLAGS) main.c
 
-main: main.o $(LIBFRACTAL)
-	@$(GCC) $(LDFLAGS) -o main $(LIBFRACTAL) main.o
+main: main.o $(LIBRARIES)
+	@$(GCC) $(LDFLAGS) -o main $(LIBRARIES) main.o
 	@echo "Project made"
 
-main_gdb: main.o $(LIBFRACTAL)
-	@$(GCC) $(LDFLAGS) -g -o main $(LIBFRACTAL) main.o
-	@echo "Project made with GDB"
+$(LIBFRACTAL):
+	cd libractal && make
+
+$(LIBSTACK):
+	cd stack && make
 
 clean:
-	@rm -f libfractal/*.o libractal/*.a *.o mainµ
+	@rm -f libfractal/*.o libractal/*.a stack/*.o stack/*.a *.o main
 	@echo "Cleaned project"
+
+lib:
+	cd libfractal && make
+	@echo "Library made"

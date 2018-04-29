@@ -15,11 +15,11 @@ int push(node_t **head, fractal_t *value){
 
 
 
-fractal_t pop(struct node **head){
+fractal_t* pop(struct node **head){
 	if(head == NULL) return 1;
 	node_t * oldhead = *head;
 	*head = oldhead->next;
-	fractal_t popped_fractal  =  oldhead->fractal;
+	fractal_t *popped_fractal  =  oldhead->fractal;
 	free (oldhead);
 	return popped_fractal;
 }

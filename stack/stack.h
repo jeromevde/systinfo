@@ -7,7 +7,7 @@
 * noeud du stack
 */
 typedef struct node {
-  node *next;
+  struct node *next;
   fractal_t *fractal;
 } node_t;
 
@@ -34,4 +34,4 @@ int push(node_t **head, fractal_t *value);
 * @return 0 if no error, 1 otherwise
 *
 */
-int pop(struct node **head);
+fractal_t* pop(struct node **head);
