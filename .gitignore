@@ -2,3 +2,6 @@
 cmake-build-debug/
 main
 main.o
+libfractal/libfractal.a
+stack/stack.a
+stack/stack.o
