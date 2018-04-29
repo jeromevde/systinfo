@@ -1,18 +1,19 @@
 GCC = gcc
-CFLAGS = -g -c -Wall -std=c99 -I$(HOME)/local/include
-LDFLAGS = --static -g -lSDL  -pthread -L$(HOME)/local/lib -lcunit
+CFLAGS = -g -Wall -std=c99 -I$(HOME)/local/include
+LDFLAGS = --static -g -lSDL -pthread -L$(HOME)/local/lib -lcunit
 LIBFRACTAL = libfractal/libfractal.a
 LIBSTACK = stack/stack.a
 LIBRARIES = libfractal/libfractal.a stack/stack.a
 
 all: main
 
-main.o: main.c
-	@$(GCC) $(CFLAGS) main.c
-
 main: main.o $(LIBRARIES)
-	@$(GCC) $(LDFLAGS) -o main $(LIBRARIES) main.o
+	@$(GCC) $(LDFLAGS) -o main main.o $(LIBRARIES)
 	@echo "Project made"
+
+main.o: main.c
+	@$(GCC) $(CFLAGS) -c -o main.o  main.c
+
 
 $(LIBFRACTAL):
 	cd libfractal && make
@@ -20,18 +21,20 @@ $(LIBFRACTAL):
 $(LIBSTACK):
 	cd stack && make
 
-test/test: test/test.o $(LIBRARIES)
-	@$(GCC) $(LDFLAGS) -o test/test test/test.o
-
 test/test.o: test/test.c
-	@$(GCC) $(CFLAGS) -o test/test.o test/test.c
+	@$(GCC) $(CFLAGS) -c -o test/test.o test/test.c
+
+test/test: test/test.o $(LIBRARIES)
+	@$(GCC) $(LDFLAGS) $(CFLAGS) -o test/test test/test.o $(LIBRARIES)
 
 testProgram: test/test
-	./test/test
+	@LD_LIBRARY_PATH=$(HOME)/local/lib ./test/test
 
 clean:
-	@rm -f libfractal/*.o libfractal/*.a stack/*.o stack/*.a *.o main
-	@rm -f test/test.o test/test
+	@find . -name \*.o -type f -delete
+	@find . -name \*.a -type f -delete
+	@rm -f main
+	@rm -f test/test
 	@echo "Cleaned project"
 
 lib:
