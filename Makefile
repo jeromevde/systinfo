@@ -22,6 +22,8 @@ $(LIBFRACTAL):
 $(LIBSTACK):
 	cd stack && make
 
+tests: tests/tests.
+
 clean:
 	@rm -f libfractal/*.o libfractal/*.a stack/*.o stack/*.a *.o main
 	@echo "Cleaned project"
