@@ -1,6 +1,4 @@
 GCC = gcc
-AR = ar
-ARFLAGS = -cvq
 CFLAGS = -Wall -std=c99 -g -c -I$HOME/local/include
 LDFLAGS = --static -g -lSDL -lcunit -pthread
 LIBFRACTAL = libfractal/libfractal.a
@@ -22,15 +20,11 @@ $(LIBFRACTAL):
 $(LIBSTACK):
 	cd stack && make
 
-test: test/test.o $(LIBRARIES)
-	@$(GCC) $(CFLAGS) -o test/test test/test.o $(LIBRARIES)
+test/test:
+	gcc -Wall -pthread -I$HOME/local/include test/test.c -L$HOME/local/lib -lcunit -o testProg
 
-test/test.o: test/test.c
-	@$(GCC) $(CFLAGS) -o test/test.o test/test.c
-
-testProgram: test
-	./test
-.PHONY: test
+testProgram: test/test
+	./testProg
 
 clean:
 	@rm -f libfractal/*.o libfractal/*.a stack/*.o stack/*.a *.o main
