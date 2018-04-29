@@ -2,7 +2,7 @@ GCC = gcc
 AR = ar
 ARFLAGS = -cvq
 CFLAGS = -Wall -std=c99 -g -c
-LDFLAGS = --static -g  -lcunit -pthread
+LDFLAGS = --static -g -lSDL -lcunit -pthread
 LIBFRACTAL = libfractal/libfractal.a
 
 all: main
