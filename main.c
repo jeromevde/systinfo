@@ -6,7 +6,7 @@
 #include <memory.h>
 #include <pthread.h>
 #include <semaphore.h>
-#include "libfractal/fractal.h"
+#include "libfractal/fractal.c"
 
 /* ******************************************************************
  *                                                                  *
@@ -79,7 +79,6 @@ void *fileReader(void *filename) {
         lineNumber++;
         if (matched == 5) {
             fractal_t * fractal = fractal_new(name, width, height, a, b);
-
             fractal_free(fractal);
         } else {
             printf("Line %d ignored\n", lineNumber);
@@ -88,7 +87,7 @@ void *fileReader(void *filename) {
     }
 
 
-    return NULL;
+    pthread_exit(NULL);
 }
 
 int main(int argc, char *argv[])
@@ -166,6 +165,8 @@ int main(int argc, char *argv[])
             if (threadCreationResult != 0) {
                 fprintf(stderr, "%s : %s\n", "Error while creating the thread to read the following file", argv[argIndex]);
             }
+
+            pthread_join(fileReaderThreads[fileIndex], NULL);
         }
 
         argIndex++;
@@ -173,7 +174,7 @@ int main(int argc, char *argv[])
 
     char outputFile = *argv[argIndex];
 
-    if (printAll) {
+    if (printAll && outputFile) {
 
     }
 
