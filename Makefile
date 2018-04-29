@@ -22,7 +22,11 @@ $(LIBFRACTAL):
 $(LIBSTACK):
 	cd stack && make
 
-tests: tests/tests.
+tests: tests/tests.o $(LIBRARIES)
+	@$(GCC) $(LDFLAGS) -o test/tests test/tests.o
+
+tests/tests.o: test/tests.c
+	@$(GCC) $(CFLAGS) -o tests/tests.o tests/tests.c
 
 clean:
 	@rm -f libfractal/*.o libfractal/*.a stack/*.o stack/*.a *.o main
