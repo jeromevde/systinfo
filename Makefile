@@ -17,13 +17,13 @@ main: main.o $(LIBRARIES)
 	@echo "Project made"
 
 $(LIBFRACTAL):
-	cd libractal && make
+	cd libfractal && make
 
 $(LIBSTACK):
 	cd stack && make
 
 clean:
-	@rm -f libfractal/*.o libractal/*.a stack/*.o stack/*.a *.o main
+	@rm -f libfractal/*.o libfractal/*.a stack/*.o stack/*.a *.o main
 	@echo "Cleaned project"
 
 lib:
