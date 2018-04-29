@@ -4,8 +4,14 @@
 #include <stdbool.h>
 #include <string.h>
 #include <memory.h>
+#include <pthread.h>
 #include "libfractal/fractal.h"
 
+
+
+void *reader(void *params) {
+
+}
 
 int main(int argc, char *argv[])
 {
@@ -53,8 +59,38 @@ int main(int argc, char *argv[])
         argIndex++;
     }
 
-    while (argIndex < argc - 1) {
-        /* TODO */
+    /**
+     * @var int : total amout of files
+     */
+    int totalFiles = argc - argIndex -1;
+
+    /**
+     * @var pthread_t[] : Table containing the file reading threads
+     */
+    pthread_t fileReaderThreads[totalFiles];
+
+    /**
+     * @var int : files counter
+     */
+    int fileIndex = 0;
+
+    /*
+     * Running through all args containing file inputs
+     */
+    for (fileIndex = 0; fileIndex < totalFiles; fileIndex++) {
+
+        if (strcmp(argv[argIndex], "-") == 0) {
+
+        } else {
+
+            /* Initializing file reading threads */
+            int result = pthread_create(&fileReaderThreads[fileIndex], NULL, *reader, (void *) argv[argIndex]);
+
+            if (result != 0) {
+                fprintf(stderr, "%s %s\n", "Error while creating the thread to read file", argv[argIndex]);
+            }
+        }
+
         argIndex++;
     }
 
@@ -62,3 +98,4 @@ int main(int argc, char *argv[])
 
     return 0;
 }
+
