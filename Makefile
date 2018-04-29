@@ -1,7 +1,7 @@
 GCC = gcc
 AR = ar
 ARFLAGS = -cvq
-CFLAGS = -Wall -std=c99 -g -c
+CFLAGS = -Wall -std=c99 -g -c -I$HOME/local/include
 LDFLAGS = --static -g -lSDL -lcunit -pthread
 LIBFRACTAL = libfractal/libfractal.a
 LIBSTACK = stack/stack.a
@@ -22,14 +22,19 @@ $(LIBFRACTAL):
 $(LIBSTACK):
 	cd stack && make
 
-tests: tests/tests.o $(LIBRARIES)
-	@$(GCC) $(LDFLAGS) -o test/tests test/tests.o
+test: test/test.o $(LIBRARIES)
+	@$(GCC) $(CFLAGS) -o test/test test/test.o $(LIBRARIES)
 
-tests/tests.o: test/tests.c
-	@$(GCC) $(CFLAGS) -o tests/tests.o tests/tests.c
+test/test.o: test/test.c
+	@$(GCC) $(CFLAGS) -o test/test.o test/test.c
+
+testProgram: test
+	./test
+.PHONY: test
 
 clean:
 	@rm -f libfractal/*.o libfractal/*.a stack/*.o stack/*.a *.o main
+	@rm -f test/test.o test/test
 	@echo "Cleaned project"
 
 lib:
