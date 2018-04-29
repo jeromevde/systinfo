@@ -14,13 +14,14 @@ lib:
 	cd libfractal && make
 
 main.o: main.c
-	$(GCC) $(CFLAGS) main.c
+	@$(GCC) $(CFLAGS) main.c
 
 main: main.o $(LIBFRACTAL)
-	$(GCC) $(LDFLAGS) -o main $(LIBFRACTAL) main.o
+	@$(GCC) $(LDFLAGS) -o main $(LIBFRACTAL) main.o
 
 main_gdb: main.o $(LIBFRACTAL)
-	$(GCC) $(LDFLAGS) -g -o main $(LIBFRACTAL) main.o
+	@$(GCC) $(LDFLAGS) -g -o main $(LIBFRACTAL) main.o
 
 clean:
-	@rm -f libfractal/*.o libractal/*.a *.o main
+	@rm -f libfractal/*.o libractal/*.a *.o mainµ
+	@echo "Cleaned project"

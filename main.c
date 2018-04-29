@@ -5,12 +5,41 @@
 #include <string.h>
 #include <memory.h>
 #include <pthread.h>
+#include <semaphore.h>
 #include "libfractal/fractal.h"
 
+/* ******************************************************************
+ *                                                                  *
+ *    ,--------,                                                    *
+ *    |  main  | ==> Reads input arguments                          *
+ *    '--------'                                                    *
+ *     |            ||        ||         ||                         *
+ *     |            ||        ||         ||     --fileReader        *
+ *     |           \||/      \||/       \||/                        *
+ *     |            \/        \/         \/                         *
+ *     |      ,---------------------------------,                   *
+ *     |      | Buffer with fractals to compute |                   *
+ *     |      '---------------------------------'                   *
+ *     |            ||        ||         ||                         *
+ *     |            ||        ||         ||     --computer          *
+ *     |           \||/      \||/       \||/                        *
+ *     |            \/        \/         \/                         *
+ *     |      ,---------------------------------,                   *
+ *     |      |  Buffer with computed fractals  |                   *
+ *     |      '---------------------------------'                   *
+ *     |        |                                                   *
+ *     | <------┘                                                   *
+ *     |                                                            *
+ *    ,---------------,                                             *
+ *    | Print fractal |                                             *
+ *    '---------------'                                             *
+ *                                                                  *
+ ****************************************************************** */
 
+void *fileReader(void *filename) {
+    printf("%s : %s\n", "Reading the following file", (char *) filename);
 
-void *reader(void *params) {
-
+    return NULL;
 }
 
 int main(int argc, char *argv[])
@@ -28,7 +57,7 @@ int main(int argc, char *argv[])
     /**
      * @var int : args counter
      */
-    int argIndex = 1; // dummy variable
+    int argIndex = 1;
 
     printf("%s\n", "==== Starting fractal computer ====");
 
@@ -55,7 +84,7 @@ int main(int argc, char *argv[])
     if (strcmp( argv[argIndex], "--maxthreads") == 0) {
         argIndex++;
         maxthreads =atoi(argv[argIndex]);
-        printf("%s : %d\n", "Max amount of threads has been set to", maxthreads);
+        printf("%s %d\n", "Max amount of threads has been set to", maxthreads);
         argIndex++;
     }
 
@@ -78,16 +107,15 @@ int main(int argc, char *argv[])
      * Running through all args containing file inputs
      */
     for (fileIndex = 0; fileIndex < totalFiles; fileIndex++) {
-
         if (strcmp(argv[argIndex], "-") == 0) {
 
         } else {
 
             /* Initializing file reading threads */
-            int result = pthread_create(&fileReaderThreads[fileIndex], NULL, *reader, (void *) argv[argIndex]);
+            int result = pthread_create(&fileReaderThreads[fileIndex], NULL, *fileReader, (void *) argv[argIndex]);
 
             if (result != 0) {
-                fprintf(stderr, "%s %s\n", "Error while creating the thread to read file", argv[argIndex]);
+                fprintf(stderr, "%s : %s\n", "Error while creating the thread to read the following file", argv[argIndex]);
             }
         }
 
@@ -95,6 +123,10 @@ int main(int argc, char *argv[])
     }
 
     char outputFile = *argv[argIndex];
+
+    if (printAll) {
+
+    }
 
     return 0;
 }
