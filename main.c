@@ -6,7 +6,8 @@
 #include <memory.h>
 #include <pthread.h>
 #include <semaphore.h>
-#include "libfractal/fractal.c"
+#include "libfractal/fractal.h"
+#include "stack/stack.h"
 
 /* ******************************************************************
  *                                                                  *
@@ -35,6 +36,41 @@
  *    '---------------'                                             *
  *                                                                  *
  ****************************************************************** */
+
+
+
+/* ******************************************************************
+ *                          Buffer to compute
+ ****************************************************************** */
+
+/** @var node_t : First element of the "to compute" buffer */
+node_t *toComputeBuffer;
+
+/** @var pthread_mutex_t : mutex locker of the "to compute" buffer */
+pthread_mutex_t toComputeBufferMutex;
+
+/** @var sem_t : semaphore containing the amount of empty slots in the "to compute" buffer */
+sem_t toComputeBufferEmpty;
+
+/** @var sem_t : semaphore containing the amount of taken slots in the "to compute" buffer */
+sem_t toComputeBufferFull;
+
+
+/* ******************************************************************
+ *                          Buffer computed
+ ****************************************************************** */
+
+/** @var node_t : First element of the "computed" buffer */
+node_t *computedBuffer;
+
+/** @var pthread_mutex_t : mutex locker of the "computed" buffer */
+pthread_mutex_t computedBufferMutex;
+
+/** @var sem_t : semaphore containing the amount of empty slots in the "computed" buffer */
+sem_t computedBufferEmpty;
+
+/** @var sem_t : semaphore containing the amount of taken slots in the "computed" buffer */
+sem_t computedBufferFull;
 
 
 /**
@@ -80,6 +116,17 @@ void *fileReader(void *filename) {
         lineNumber++;
         if (matched == 5) {
             fractal_t * fractal = fractal_new(name, width, height, a, b);
+
+            sem_wait(&toComputeBufferEmpty);
+            pthread_mutex_lock(&toComputeBufferMutex);
+
+            if (push(&toComputeBuffer, fractal) == EXIT_FAILURE) {
+                fprintf(stderr, "%s\n", "Error while pushing into the \"to compute\" buffer");
+            }
+
+            pthread_mutex_unlock(&toComputeBufferMutex);
+            sem_post(&toComputeBufferFull);
+
             printf("- Added %s : %f + %fi. Image size : %i x %i\n", name, a, b, width, height);
             fractal_free(fractal);
         }
@@ -93,19 +140,13 @@ void *fileReader(void *filename) {
 
 int main(int argc, char *argv[])
 {
-    /**
-     * @var boolean : need to print all computed fractals
-     */
+    /** @var boolean : need to print all computed fractals */
     int printAll = false;
 
-    /**
-     * @var int : max amount of threads
-     */
+    /** @var int : max amount of threads */
     int maxthreads = 2;
 
-    /**
-     * @var int : args counter
-     */
+    /** @var int : args counter */
     int argIndex = 1;
 
     printf(
@@ -119,7 +160,7 @@ int main(int argc, char *argv[])
      * At least 3 arguments must be given
      */
     if (argc < 3){
-        printf("%s\n","You must at least provide an input and an output file" );
+        fprintf(stderr, "%s\n","You must at least provide an input and an output file" );
         exit(EXIT_FAILURE);
     }
 
@@ -138,24 +179,33 @@ int main(int argc, char *argv[])
     if (strcmp( argv[argIndex], "--maxthreads") == 0) {
         argIndex++;
         maxthreads =atoi(argv[argIndex]);
-        printf("%s %d\n", "Max amount of threads has been set to", maxthreads);
         argIndex++;
     }
-    printf("\n\n");
+    printf("%s %d\n\n", "Max amount of threads has been set to", maxthreads);
 
-    /**
-     * @var int : total amout of files
+    /*
+     * Initializing mutex and semaphores concerning the "to compute" buffer
      */
+    if (pthread_mutex_init(&toComputeBufferMutex, NULL) != EXIT_SUCCESS) {
+        fprintf(stderr, "%s\n", "Error while initializing the \"to compute\" buffer mutex");
+    }
+
+    if (sem_init(&toComputeBufferEmpty, 0, (unsigned int) maxthreads * 2) != EXIT_SUCCESS) {
+        fprintf(stderr, "%s\n", "Error while initializing the \"to compute\" buffer's empty semaphore");
+    }
+
+    if (sem_init(&toComputeBufferFull, 0, 0) != EXIT_SUCCESS) {
+        fprintf(stderr, "%s\n", "Error while initializing the \"to compute\" buffer's full semaphore");
+    }
+
+
+    /** @var int : total amout of files */
     int totalFiles = argc - argIndex -1;
 
-    /**
-     * @var pthread_t[] : Table containing the file reading threads
-     */
+    /** @var pthread_t[] : Table containing the file reading threads */
     pthread_t fileReaderThreads[totalFiles];
 
-    /**
-     * @var int : files counter
-     */
+    /** @var int : files counter */
     int fileIndex = 0;
 
     /*

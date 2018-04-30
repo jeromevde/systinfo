@@ -1,21 +1,24 @@
-#include<stdlib.h>
+#include <stdlib.h>
 #include "stack.h"
 
 
 int push(node_t **head, fractal_t *value){
-	if(head == NULL) return 1;
-	node_t *newhead = (struct node *) malloc(sizeof(struct node));
-	if (newhead == NULL) return 1;
+	if(head == NULL) return EXIT_FAILURE;
+
+	node_t *newhead = (node_t *) malloc(sizeof(node_t));
+	if (newhead == NULL) return EXIT_FAILURE;
+
 	newhead->fractal = value;
 	newhead->next = (*head);
 	*head = newhead;
-	return 0;
+
+	return EXIT_SUCCESS;
 }
 
 
 
 fractal_t* pop(struct node **head){
-	if(head == NULL) return 1;
+	if(head == NULL) return NULL;
 	node_t * oldhead = *head;
 	*head = oldhead->next;
 	fractal_t *popped_fractal  =  oldhead->fractal;

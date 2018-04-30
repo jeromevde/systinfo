@@ -10,9 +10,16 @@ struct fractal *fractal_new(const char *name, int width, int height, double a, d
 
     if (allocatedFractal == NULL) {
         return NULL;
+        /* TODO : Error reporting */
     }
 
     allocatedFractal->name = malloc(strlen(name) + sizeof(char));
+    if (allocatedFractal->name == NULL) {
+        free(allocatedFractal);
+        return NULL;
+        /* TODO : Error reporting */
+    }
+
     strncpy(allocatedFractal->name, name, strlen(name) + sizeof(char));
 
     allocatedFractal->width = width;
@@ -23,8 +30,10 @@ struct fractal *fractal_new(const char *name, int width, int height, double a, d
 
     allocatedFractal->values = calloc(width * height, sizeof(int));
     if (allocatedFractal->values == NULL) {
+        free(allocatedFractal->name);
         free(allocatedFractal);
         return NULL;
+        /* TODO : Error reporting */
     }
     return allocatedFractal;
 }
