@@ -1,5 +1,4 @@
 #include <stdlib.h>
-
 #include <CUnit/Basic.h>
 #include <CUnit/Console.h>
 #include <CUnit/Automated.h>
@@ -8,13 +7,47 @@
 #include "../libfractal/fractal.h"
 #include "../stack/stack.h"
 
-void testGetSetValue(void) {
-	struct fractal * test = fractal_new("NULL", 1, 1, 0, 0);
-	int x = 10;
-	fractal_set_value(test, 1, 1, x);
-	CU_ASSERT_NOT_EQUAL(x, fractal_get_value(test, 1, 1));
-	fractal_free(test);
+/*
+* SUITE de test CUnit
+*/
+
+
+/*
+* tester les get et set de libfractale
+*/
+void testGetterSetter(void){
+	fractal_t *myfractal = fractal_new("myfractal", 1000,1000, 0.5,0.5);
+	CU_ASSERT_EQUAL(fractal_get_name(myfractal), "myfractal");
+	CU_ASSERT_EQUAL((int)fractal_get_a(myfractal), (int)0.5 );
+	CU_ASSERT_EQUAL((int)fractal_get_b(myfractal), (int)0.5 );
+	CU_ASSERT_EQUAL(fractal_get_width(myfractal), 1000);
+	CU_ASSERT_EQUAL(fractal_get_height(myfractal),1000);
+	fractal_set_value(myfractal, 0, 3, 666);
+	CU_ASSERT_EQUAL((int)fractal_get_value(myfractal, 0,3), 6);
+	fractal_free(myfractal);
 }
+
+/*
+*test le push et pop de l'object stack
+*/
+void testPushPopStack1(void) {
+	fractal_t *fractal1 = (fractal_t*) malloc(sizeof(node_t));
+	node_t * head = (node_t*) malloc(sizeof(node_t));
+	head->fractal = fractal1;
+	fractal_t *fractal2 = (fractal_t*) malloc(sizeof(node_t));
+	stack_push(&head, fractal2);
+	CU_ASSERT_EQUAL(fractal2, head->fractal);
+	CU_ASSERT_EQUAL(fractal1, head->next->fractal);
+	stack_pop(&head);
+	CU_ASSERT_EQUAL(NULL, head->next);
+	stack_pop(&head);
+	CU_ASSERT_EQUAL(NULL, head);
+	free(fractal1);
+	free(fractal2);
+}
+
+
+
 
 int init_suite1(void){
   return 0;
@@ -44,8 +77,8 @@ int main()
    }
 
    /* add the tests to the suite */
-   /* NOTE - ORDER IS IMPORTANT - MUST TEST fread() AFTER fprintf() */
-   if ((NULL == CU_add_test(pSuite, "test getSetValue", testGetSetValue)) )
+   if ((NULL == CU_add_test(pSuite, "test getSetValue", testPushPopStack1))
+  		||NULL == CU_add_test(pSuite, "test fractale getter setter", testGetterSetter))
    {
       CU_cleanup_registry();
       return CU_get_error();
