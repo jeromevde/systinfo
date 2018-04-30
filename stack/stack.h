@@ -21,7 +21,7 @@ typedef struct node {
 *
 * @return 0 if no error, 1 otherwise
 */
-int push(node_t **head, fractal_t *value);
+int pushInBuffer(node_t **head, fractal_t *value);
 
 
 
@@ -34,4 +34,4 @@ int push(node_t **head, fractal_t *value);
 * @return 0 if no error, 1 otherwise
 *
 */
-fractal_t* pop(struct node **head);
+fractal_t* popFromBuffer(struct node **head);

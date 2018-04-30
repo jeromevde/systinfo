@@ -1,7 +1,7 @@
 GCC = gcc
 
 CFLAGS = -g -Wall -W -std=c99
-LDFLAGS = --static -g -lSDL -pthread
+LDFLAGS = --static -g -L$(HOME)/local/lib -L/usr/local/lib -lSDL -pthread
 CUNITFLAGS= -L$(HOME)/local/lib -lcunit
 
 LIBFRACTAL = libfractal/libfractal.a

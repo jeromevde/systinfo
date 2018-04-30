@@ -2,11 +2,9 @@
 #include "stack.h"
 
 
-int push(node_t **head, fractal_t *value){
-	if(head == NULL) return EXIT_FAILURE;
-
-	node_t *newhead = (node_t *) malloc(sizeof(node_t));
-	if (newhead == NULL) return EXIT_FAILURE;
+int pushInBuffer(node_t **head, fractal_t *value){
+    node_t *newhead = (node_t *) malloc(sizeof(node_t));
+    if (newhead == NULL) return EXIT_FAILURE;
 
 	newhead->fractal = value;
 	newhead->next = (*head);
@@ -17,7 +15,7 @@ int push(node_t **head, fractal_t *value){
 
 
 
-fractal_t* pop(struct node **head){
+fractal_t* popFromBuffer(struct node **head){
 	if(head == NULL) return NULL;
 	node_t * oldhead = *head;
 	*head = oldhead->next;

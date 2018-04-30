@@ -19,14 +19,14 @@
  *     |           \||/      \||/       \||/                        *
  *     |            \/        \/         \/                         *
  *     |      ,---------------------------------,                   *
- *     |      | Buffer with fractals to compute |                   *
+ *     |      | Buffer with fractals to compute | toComputeBuffer   *
  *     |      '---------------------------------'                   *
  *     |            ||        ||         ||                         *
  *     |            ||        ||         ||     --computer          *
  *     |           \||/      \||/       \||/                        *
  *     |            \/        \/         \/                         *
  *     |      ,---------------------------------,                   *
- *     |      |  Buffer with computed fractals  |                   *
+ *     |      |  Buffer with computed fractals  | computedBuffer    *
  *     |      '---------------------------------'                   *
  *     |        |                                                   *
  *     | <------┘                                                   *
@@ -37,7 +37,11 @@
  *                                                                  *
  ****************************************************************** */
 
+/** @var int : max amount of threads */
+int maxthreads = 2;
 
+/** @var boolean : need to print all computed fractals */
+int printAll = false;
 
 /* ******************************************************************
  *                          Buffer to compute
@@ -65,12 +69,6 @@ node_t *computedBuffer;
 
 /** @var pthread_mutex_t : mutex locker of the "computed" buffer */
 pthread_mutex_t computedBufferMutex;
-
-/** @var sem_t : semaphore containing the amount of empty slots in the "computed" buffer */
-sem_t computedBufferEmpty;
-
-/** @var sem_t : semaphore containing the amount of taken slots in the "computed" buffer */
-sem_t computedBufferFull;
 
 
 /**
@@ -114,13 +112,13 @@ void *fileReader(void *filename) {
     while (matched != EOF)
     {
         lineNumber++;
-        if (matched == 5) {
+        if (matched == 5 && name[0] != '#') {
             fractal_t * fractal = fractal_new(name, width, height, a, b);
 
             sem_wait(&toComputeBufferEmpty);
             pthread_mutex_lock(&toComputeBufferMutex);
 
-            if (push(&toComputeBuffer, fractal) == EXIT_FAILURE) {
+            if (pushInBuffer(&toComputeBuffer, fractal) == EXIT_FAILURE) {
                 fprintf(stderr, "%s\n", "Error while pushing into the \"to compute\" buffer");
             }
 
@@ -128,23 +126,71 @@ void *fileReader(void *filename) {
             sem_post(&toComputeBufferFull);
 
             printf("- Added %s : %f + %fi. Image size : %i x %i\n", name, a, b, width, height);
-            fractal_free(fractal);
+
         }
         matched = fscanf(file, "%s %i %i %f %f\n", name, &width, &height, &a, &b);
     }
 
-
     printf("\n\n");
+
+
     pthread_exit(NULL);
+}
+
+void *computer() {
+    while (true) {
+        sem_wait(&toComputeBufferFull);
+        pthread_mutex_lock(&toComputeBufferMutex);
+
+        fractal_t *poppedFractal = popFromBuffer(&toComputeBuffer);
+
+        pthread_mutex_unlock(&toComputeBufferMutex);
+        sem_post(&toComputeBufferEmpty);
+
+        for (int x = 0; x < fractal_get_width(poppedFractal); x++) {
+            for (int y = 0; y < fractal_get_height(poppedFractal); y++) {
+                fractal_compute_value(poppedFractal, x, y);
+            }
+        }
+
+        if (printAll) {
+            write_bitmap_sdl(poppedFractal, fractal_get_name(poppedFractal));
+        } else {
+            pthread_mutex_lock(&computedBufferMutex);
+            /* TODO : compute average before pushing */
+            pushInBuffer(&computedBuffer, poppedFractal);
+
+            pthread_mutex_unlock(&computedBufferMutex);
+        }
+    }
+}
+
+void makeMutexSem() {
+    /*
+     * Initializing mutex and semaphores concerning the "to compute" buffer
+     */
+    if (pthread_mutex_init(&toComputeBufferMutex, NULL) != EXIT_SUCCESS) {
+        fprintf(stderr, "%s\n", "Error while initializing the \"to compute\" buffer mutex");
+    }
+
+    if (sem_init(&toComputeBufferEmpty, 0, (unsigned int) maxthreads * 2) != EXIT_SUCCESS) {
+        fprintf(stderr, "%s\n", "Error while initializing the \"to compute\" buffer's empty semaphore");
+    }
+
+    if (sem_init(&toComputeBufferFull, 0, 0) != EXIT_SUCCESS) {
+        fprintf(stderr, "%s\n", "Error while initializing the \"to compute\" buffer's full semaphore");
+    }
+
+    /*
+     * Initializing mutex and semaphores concerning the "computed" buffer
+     */
+    if (pthread_mutex_init(&computedBufferMutex, NULL) != EXIT_SUCCESS) {
+        fprintf(stderr, "%s\n", "Error while initializing the \"computed\" buffer mutex");
+    }
 }
 
 int main(int argc, char *argv[])
 {
-    /** @var boolean : need to print all computed fractals */
-    int printAll = false;
-
-    /** @var int : max amount of threads */
-    int maxthreads = 2;
 
     /** @var int : args counter */
     int argIndex = 1;
@@ -183,21 +229,7 @@ int main(int argc, char *argv[])
     }
     printf("%s %d\n\n", "Max amount of threads has been set to", maxthreads);
 
-    /*
-     * Initializing mutex and semaphores concerning the "to compute" buffer
-     */
-    if (pthread_mutex_init(&toComputeBufferMutex, NULL) != EXIT_SUCCESS) {
-        fprintf(stderr, "%s\n", "Error while initializing the \"to compute\" buffer mutex");
-    }
-
-    if (sem_init(&toComputeBufferEmpty, 0, (unsigned int) maxthreads * 2) != EXIT_SUCCESS) {
-        fprintf(stderr, "%s\n", "Error while initializing the \"to compute\" buffer's empty semaphore");
-    }
-
-    if (sem_init(&toComputeBufferFull, 0, 0) != EXIT_SUCCESS) {
-        fprintf(stderr, "%s\n", "Error while initializing the \"to compute\" buffer's full semaphore");
-    }
-
+    makeMutexSem();
 
     /** @var int : total amout of files */
     int totalFiles = argc - argIndex -1;
@@ -217,7 +249,7 @@ int main(int argc, char *argv[])
         } else {
 
             /* Initializing file reading threads */
-            int threadCreationResult = pthread_create(&fileReaderThreads[fileIndex], NULL, *fileReader, (void *) argv[argIndex]);
+            int threadCreationResult = pthread_create(&fileReaderThreads[fileIndex], NULL, &fileReader, (void *) argv[argIndex]);
 
             if (threadCreationResult != 0) {
                 fprintf(stderr, "%s : %s\n", "Error while creating the thread to read the following file", argv[argIndex]);
@@ -227,6 +259,12 @@ int main(int argc, char *argv[])
         }
 
         argIndex++;
+    }
+
+    pthread_t computerThreads[maxthreads];
+
+    for (int i = 0; i < maxthreads; i++) {
+        pthread_create(&computerThreads[i], NULL, &computer, NULL);
     }
 
     char outputFile = *argv[argIndex];
