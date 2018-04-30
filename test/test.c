@@ -1,8 +1,8 @@
 #include <stdlib.h>
 
-#include "CUnit/Basic.h"
-#include "CUnit/Console.h"
-#include "CUnit/Automated.h"
+#include <CUnit/Basic.h>
+#include <CUnit/Console.h>
+#include <CUnit/Automated.h>
 #include <CUnit/CUnit.h>
 
 #include "../libfractal/fractal.h"
