@@ -155,8 +155,7 @@ void *computer(void *args) {
         printf("Computing fractal : %s\n", fractal_get_name(poppedFractal));
 
 
-        pthread_mutex_unlock(&toComputeBufferMutex);
-        sem_post(&toComputeBufferEmpty);
+
 
         for (int x = 0; x < fractal_get_width(poppedFractal); x++) {
             for (int y = 0; y < fractal_get_height(poppedFractal); y++) {
@@ -164,6 +163,8 @@ void *computer(void *args) {
             }
         }
 
+        pthread_mutex_unlock(&toComputeBufferMutex);
+        sem_post(&toComputeBufferEmpty);
 
         if (printAll) {
             write_bitmap_sdl(poppedFractal, strcat(fractal_get_name(poppedFractal),".bmp"));
@@ -250,9 +251,11 @@ int main(int argc, char *argv[])
     pthread_t computerThreads[maxthreads];
 
     for (int i = 0; i < maxthreads; i++) {
-        pthread_t myComputerThread;
-        pthread_create(&myComputerThread, NULL, &computer, NULL);
+        pthread_create(&computerThreads[i], NULL, &computer, NULL);
     }
+
+
+
 
     /** @var int : total amout of files */
     int totalFiles = argc - argIndex -1;
@@ -274,19 +277,26 @@ int main(int argc, char *argv[])
             if (threadCreationResult != 0) {
                 fprintf(stderr, "%s : %s\n", "Error while creating the thread to read the following file", argv[argIndex]);
             }
-
-            pthread_join(fileReaderThreads[fileIndex], NULL);
         }
 
         argIndex++;
     }
 
+    for (int i = 0; i < totalFiles; i++) {
+        pthread_join(fileReaderThreads[i], NULL);
+    }
+
+    for(int i = 0; i<maxthreads; i++) {
+        pthread_join(computerThreads[i], NULL);
+    }
 
     char outputFile = *argv[argIndex];
 
     if (printAll && outputFile) {
 
     }
+
+    /* TODO : FREE */
 
     return 0;
 }
