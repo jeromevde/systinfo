@@ -41,6 +41,7 @@ clean:
 	@find . -name \*.a -type f -delete
 	@rm -f main
 	@rm -f tests/test
+	@rm -f *.bmp
 	@echo "Cleaned project"
 
 lib: $(LIBFRACTAL)
