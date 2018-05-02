@@ -1,7 +1,7 @@
 GCC = gcc
 
 CFLAGS = -g -Wall -W -std=c99
-LDFLAGS = --static -g -L$(HOME)/local/lib -L/usr/local/lib -lSDL -pthread
+LDFLAGS = -lm -L/usr/local/lib -L$(HOME)/local/lib -lSDL -lpthread
 CUNITFLAGS= -L$(HOME)/local/lib -lcunit
 
 LIBFRACTAL = libfractal/libfractal.a
@@ -11,7 +11,7 @@ LIBRARIES = libfractal/libfractal.a stack/stack.a
 all: main
 
 main: main.o $(LIBRARIES)
-	@$(GCC) $(LDFLAGS) -o main main.o $(LIBRARIES)
+	@$(GCC) -o main main.o $(LIBRARIES) $(LDFLAGS)
 	@echo "Project made"
 
 main.o: main.c

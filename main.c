@@ -5,6 +5,12 @@
 #include <string.h>
 #include <memory.h>
 #include <pthread.h>
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
+
 #include <semaphore.h>
 #include "libfractal/fractal.h"
 #include "stack/stack.h"
@@ -48,7 +54,7 @@ int printAll = false;
  ****************************************************************** */
 
 /** @var node_t : First element of the "to compute" buffer */
-node_t *toComputeBuffer;
+node_t *toComputeBuffer = NULL;
 
 /** @var pthread_mutex_t : mutex locker of the "to compute" buffer */
 pthread_mutex_t toComputeBufferMutex;
@@ -120,29 +126,34 @@ void *fileReader(void *filename) {
 
             if (pushInBuffer(&toComputeBuffer, fractal) == EXIT_FAILURE) {
                 fprintf(stderr, "%s\n", "Error while pushing into the \"to compute\" buffer");
+            } else {
+                printf("Successfully pushed fractal %s into the \"to compute\" buffer\n", fractal_get_name(fractal));
             }
+            printf("- Added %s : %f + %fi. Image size : %i x %i\n", name, a, b, width, height);
 
             pthread_mutex_unlock(&toComputeBufferMutex);
             sem_post(&toComputeBufferFull);
 
-            printf("- Added %s : %f + %fi. Image size : %i x %i\n", name, a, b, width, height);
 
         }
         matched = fscanf(file, "%s %i %i %f %f\n", name, &width, &height, &a, &b);
     }
 
-    printf("\n\n");
+    printf("Exitting fileReader\n\n");
 
 
     pthread_exit(NULL);
 }
 
-void *computer() {
+void *computer(void *args) {
+    printf("Computing\n");
     while (true) {
         sem_wait(&toComputeBufferFull);
         pthread_mutex_lock(&toComputeBufferMutex);
 
         fractal_t *poppedFractal = popFromBuffer(&toComputeBuffer);
+        printf("Computing fractal : %s\n", fractal_get_name(poppedFractal));
+
 
         pthread_mutex_unlock(&toComputeBufferMutex);
         sem_post(&toComputeBufferEmpty);
@@ -153,8 +164,10 @@ void *computer() {
             }
         }
 
+
         if (printAll) {
-            write_bitmap_sdl(poppedFractal, fractal_get_name(poppedFractal));
+            write_bitmap_sdl(poppedFractal, strcat(fractal_get_name(poppedFractal),".bmp"));
+            fractal_free(poppedFractal);
         } else {
             pthread_mutex_lock(&computedBufferMutex);
             /* TODO : compute average before pushing */
@@ -163,6 +176,7 @@ void *computer() {
             pthread_mutex_unlock(&computedBufferMutex);
         }
     }
+    pthread_exit(NULL);
 }
 
 void makeMutexSem() {
@@ -173,7 +187,7 @@ void makeMutexSem() {
         fprintf(stderr, "%s\n", "Error while initializing the \"to compute\" buffer mutex");
     }
 
-    if (sem_init(&toComputeBufferEmpty, 0, (unsigned int) maxthreads * 2) != EXIT_SUCCESS) {
+    if (sem_init(&toComputeBufferEmpty, 0, (unsigned int) maxthreads * 200) != EXIT_SUCCESS) {
         fprintf(stderr, "%s\n", "Error while initializing the \"to compute\" buffer's empty semaphore");
     }
 
@@ -231,19 +245,25 @@ int main(int argc, char *argv[])
 
     makeMutexSem();
 
+    printf("Starting computers\n");
+
+    pthread_t computerThreads[maxthreads];
+
+    for (int i = 0; i < maxthreads; i++) {
+        pthread_t myComputerThread;
+        pthread_create(&myComputerThread, NULL, &computer, NULL);
+    }
+
     /** @var int : total amout of files */
     int totalFiles = argc - argIndex -1;
 
     /** @var pthread_t[] : Table containing the file reading threads */
     pthread_t fileReaderThreads[totalFiles];
 
-    /** @var int : files counter */
-    int fileIndex = 0;
-
     /*
      * Running through all args containing file inputs
      */
-    for (fileIndex = 0; fileIndex < totalFiles; fileIndex++) {
+    for (int fileIndex = 0; fileIndex < totalFiles; fileIndex++) {
         if (strcmp(argv[argIndex], "-") == 0) {
 
         } else {
@@ -261,11 +281,6 @@ int main(int argc, char *argv[])
         argIndex++;
     }
 
-    pthread_t computerThreads[maxthreads];
-
-    for (int i = 0; i < maxthreads; i++) {
-        pthread_create(&computerThreads[i], NULL, &computer, NULL);
-    }
 
     char outputFile = *argv[argIndex];
 
