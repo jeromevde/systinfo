@@ -8,7 +8,10 @@ LIBFRACTAL = libfractal/libfractal.a
 LIBSTACK = stack/stack.a
 LIBRARIES = libfractal/libfractal.a stack/stack.a
 
-all: main
+all:
+	@make clean
+	@make main
+
 
 main: main.o $(LIBRARIES)
 	@$(GCC) -o main main.o $(LIBRARIES) $(LDFLAGS)
@@ -23,21 +26,21 @@ $(LIBFRACTAL):
 $(LIBSTACK):
 	@cd stack && make
 
-testProgram: test/test
-	@LD_LIBRARY_PATH=$(HOME)/local/lib ./test/test
+testProgram: tests/test
+	@LD_LIBRARY_PATH=$(HOME)/local/lib ./tests/test
 
-test/test: test/test.o $(LIBRARIES)
-	@$(GCC)  $(LDFLAGS) -o test/test test/test.o $(LIBRARIES) $(CUNITFLAGS)
+test/test: tests/test.o $(LIBRARIES)
+	@$(GCC)  $(LDFLAGS) -o tests/test tests/test.o $(LIBRARIES) $(CUNITFLAGS)
 
-test/test.o: test/test.c
-	@$(GCC) -c -o test/test.o test/test.c  $(CFLAGS)
+test/test.o: tests/test.c
+	@$(GCC) -c -o tests/test.o tests/test.c  $(CFLAGS)
 
 
 clean:
 	@find . -name \*.o -type f -delete
 	@find . -name \*.a -type f -delete
 	@rm -f main
-	@rm -f test/test
+	@rm -f tests/test
 	@echo "Cleaned project"
 
 lib: $(LIBFRACTAL)
