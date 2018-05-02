@@ -3,7 +3,8 @@
 #include "../libfractal/fractal.h"
 
 /*
- *
+ * Source (doc + some code) : Inginious exercises available at the following url
+ * https://inginious.info.ucl.ac.be/course/LSINF1252/simple_stack
  */
 
 /*
