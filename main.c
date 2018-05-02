@@ -115,6 +115,8 @@ void *fileReader(void *filename) {
 
     int matched = fscanf(file, "%s %i %i %f %f\n", name, &width, &height, &a, &b);
 
+
+    /* TODO : if # in line, skip */
     while (matched != EOF)
     {
         lineNumber++;
@@ -127,7 +129,7 @@ void *fileReader(void *filename) {
             if (pushInBuffer(&toComputeBuffer, fractal) == EXIT_FAILURE) {
                 fprintf(stderr, "%s\n", "Error while pushing into the \"to compute\" buffer");
             } else {
-                printf(" - Pushed fractal %s (%f + %fi. Image size : %i x %i) into the \"to compute\" buffer\n", name, a, b, width, height);
+                printf(" - Pushed fractal %s->%s (%f + %fi. Image size : %i x %i) into the \"to compute\" buffer\n", (char *)filename, name, a, b, width, height);
             }
 
             pthread_mutex_unlock(&toComputeBufferMutex);
@@ -141,7 +143,7 @@ void *fileReader(void *filename) {
     pthread_exit(NULL);
 }
 
-void *computer(void *args) {
+void *computer() {
     while (true) {
         sem_wait(&toComputeBufferFull);
         pthread_mutex_lock(&toComputeBufferMutex);
@@ -152,22 +154,37 @@ void *computer(void *args) {
         pthread_mutex_unlock(&toComputeBufferMutex);
         sem_post(&toComputeBufferEmpty);
 
+        uint64_t valuesSum = 0;
 
         for (int x = 0; x < fractal_get_width(poppedFractal); x++) {
             for (int y = 0; y < fractal_get_height(poppedFractal); y++) {
-                fractal_compute_value(poppedFractal, x, y);
+                valuesSum += fractal_compute_value(poppedFractal, x, y);
             }
         }
 
-        printf("> Finished fractal : %s\n\n", fractal_get_name(poppedFractal));
+        float average = (float)(valuesSum) / (fractal_get_width(poppedFractal) * fractal_get_height(poppedFractal));
+
+        poppedFractal->average = average;
+
+        printf("> Finished fractal : %s (average = %f)\n\n", fractal_get_name(poppedFractal), average);
 
         if (printAll) {
-            write_bitmap_sdl(poppedFractal, strcat(fractal_get_name(poppedFractal),".bmp"));
+            write_bitmap_sdl(poppedFractal, strcat((char *)fractal_get_name(poppedFractal),".bmp"));
             fractal_free(poppedFractal);
         } else {
             pthread_mutex_lock(&computedBufferMutex);
-            /* TODO : compute average before pushing */
-            pushInBuffer(&computedBuffer, poppedFractal);
+            if (computedBuffer == NULL) {
+                pushInBuffer(&computedBuffer, poppedFractal);
+            } else {
+                float previousAverage = computedBuffer->fractal->average;
+                if (average > previousAverage) {
+                    flushBuffer(computedBuffer);
+                }
+
+                if (average >= previousAverage) {
+                    pushInBuffer(computedBuffer, poppedFractal);
+                }
+            }
 
             pthread_mutex_unlock(&computedBufferMutex);
         }
@@ -201,6 +218,8 @@ void makeMutexSem() {
 
 int main(int argc, char *argv[])
 {
+
+    /* TODO : Wait for everyone to be finished */
 
     /** @var int : args counter */
     int argIndex = 1;
@@ -253,6 +272,7 @@ int main(int argc, char *argv[])
      * Running through all args containing file inputs
      */
     for (int fileIndex = 0; fileIndex < totalFiles; fileIndex++) {
+        /* TODO : Only one stdin */
         if (strcmp(argv[argIndex], "-") == 0) {
 
         } else {
@@ -299,6 +319,12 @@ int main(int argc, char *argv[])
     if (printAll && outputFile) {
 
     }
+
+    /*
+     * How do we know if it's finished ?
+     * - stdin must be ok
+     * - all fractals from inputs + stdin must be done
+     */
 
     /* TODO : FREE */
 

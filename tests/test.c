@@ -35,18 +35,32 @@ void testPushPopStack1(void) {
 	node_t * head = (node_t*) malloc(sizeof(node_t));
 	head->fractal = fractal1;
 	fractal_t *fractal2 = (fractal_t*) malloc(sizeof(node_t));
-	stack_push(&head, fractal2);
+	pushInBuffer(&head, fractal2);
 	CU_ASSERT_EQUAL(fractal2, head->fractal);
 	CU_ASSERT_EQUAL(fractal1, head->next->fractal);
-	stack_pop(&head);
+	popFromBuffer(&head);
 	CU_ASSERT_EQUAL(NULL, head->next);
-	stack_pop(&head);
+	popFromBuffer(&head);
 	CU_ASSERT_EQUAL(NULL, head);
 	free(fractal1);
 	free(fractal2);
 }
 
 
+/*
+* Tests the flush function of the stack
+*/
+void testFlush(void) {
+	fractal_t *fractal1 = (fractal_t*) malloc(sizeof(node_t));
+	node_t * head = (node_t*) malloc(sizeof(node_t));
+	head->fractal = fractal1;
+	fractal_t *fractal2 = (fractal_t*) malloc(sizeof(node_t));
+	pushInBuffer(&head, fractal2);
+
+	flushBuffer(head);
+
+	CU_ASSERT_PTR_NULL(head);
+}
 
 
 int init_suite1(void){

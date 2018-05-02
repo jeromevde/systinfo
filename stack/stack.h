@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include "../libfractal/fractal.h"
 
+/*
+ *
+ */
 
 /*
 * noeud du stack
@@ -23,6 +26,12 @@ typedef struct node {
 */
 int pushInBuffer(node_t **head, fractal_t *value);
 
+/**
+ * Empties the buffer (with frees)
+ *
+ * @head : pointer to the top of the stack
+ */
+void flushBuffer(node_t *head);
 
 
 /**

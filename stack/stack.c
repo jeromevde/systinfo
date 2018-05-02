@@ -13,6 +13,13 @@ int pushInBuffer(node_t **head, fractal_t *value){
 	return EXIT_SUCCESS;
 }
 
+void flushBuffer(node_t *head) {
+    node_t * newHead = head->next;
+    fractal_free(head->fractal);
+    free(head);
+    if(newHead!= NULL) flushBuffer(newHead);
+}
+
 
 
 fractal_t* popFromBuffer(struct node **head){
@@ -20,6 +27,6 @@ fractal_t* popFromBuffer(struct node **head){
 	node_t * oldhead = *head;
 	*head = oldhead->next;
 	fractal_t *popped_fractal  =  oldhead->fractal;
-	free (oldhead);
+	free(oldhead);
 	return popped_fractal;
 }
