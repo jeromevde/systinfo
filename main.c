@@ -77,6 +77,34 @@ node_t *computedBuffer;
 pthread_mutex_t computedBufferMutex;
 
 
+
+#define STDIN_FILE "user_input.txt"
+/*
+* function for reading on standard input
+*/
+  void readSTDIN(){
+    FILE* userInput =  fopen(STDIN_FILE, "w");
+    bool read = true;
+    char buffer[100];
+    while(read){
+      printf("%s\n", "Enter fractal formatted as follow: [name width height a b]" );
+      fgets(buffer,sizeof(buffer),stdin);
+      int r = fputs(buffer,userInput);
+      if (r<0) {
+        printf("%s\n","Failed to print fractal in temporary file user_input.txt" );
+      }
+      printf("%s","Do you want to enter another fractal? Y/N :");
+      fgets(buffer, sizeof(buffer),stdin);
+      printf("%s\n",buffer );
+      if(buffer[0]=='N'||buffer[0]=='n'){
+        read =false;
+      }
+    }
+    fflush(userInput); //push everything to memory
+    close(userInput); //close stream before accessing it
+  }
+
+
 /**
  * Thread reading the input files
  *
@@ -89,14 +117,21 @@ pthread_mutex_t computedBufferMutex;
 void *fileReader(void *filename) {
     printf("%s : %s\n", "Reading the following file", (char *) filename);
 
+    if (*((char *)filename)=='-') {
+      readSTDIN();
+      char stdin_file[] = STDIN_FILE;   //create string with filename of preprocessor
+      filename=(void *)&stdin_file;    //assign pointer to created string in stack-memory
+    }
+    sleep(1);
+
     FILE *file = fopen(filename, "r");
     if (file== NULL) {
         fprintf(stderr, "%s : %s\n", "Unable to find the following input file", (char *)filename);
         pthread_exit((void *)-1);
     }
 
-    /** @var string : Fractal name to be read */
-    char name[64];
+    /** @var string : Fractal name to be read , size+1*/
+    char name[65];
 
     /** @var int : Image width */
     int width;
@@ -273,9 +308,6 @@ int main(int argc, char *argv[])
      */
     for (int fileIndex = 0; fileIndex < totalFiles; fileIndex++) {
         /* TODO : Only one stdin */
-        if (strcmp(argv[argIndex], "-") == 0) {
-
-        } else {
 
             /* Initializing file reading threads */
             int threadCreationResult = pthread_create(&fileReaderThreads[fileIndex], NULL, &fileReader, (void *) argv[argIndex]);
@@ -283,7 +315,7 @@ int main(int argc, char *argv[])
             if (threadCreationResult != 0) {
                 fprintf(stderr, "%s : %s\n", "Error while creating the thread to read the following file", argv[argIndex]);
             }
-        }
+
 
         argIndex++;
     }
@@ -330,4 +362,3 @@ int main(int argc, char *argv[])
 
     return 0;
 }
-

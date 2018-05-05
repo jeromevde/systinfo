@@ -1,13 +1,15 @@
 GCC = gcc
 
 CFLAGS = -g -Wall -W -std=c99
-LDFLAGS = -lm -L/usr/local/lib -L$(HOME)/local/lib -lSDL -lpthread
+LDFLAGS = -lm  -L/usr/local/lib -L$(HOME)/local/lib -lSDL -lpthread
 CUNITFLAGS= -L$(HOME)/local/lib -lcunit
 
 LIBFRACTAL = libfractal/libfractal.a
 LIBSTACK = stack/stack.a
 LIBRARIES = libfractal/libfractal.a stack/stack.a
 
+#default recipe will automatically clean and build project
+#so no need to clean the project before building
 all:
 	@make clean
 	@make main
