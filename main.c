@@ -65,6 +65,12 @@ sem_t toComputeBufferEmpty;
 /** @var sem_t : semaphore containing the amount of taken slots in the "to compute" buffer */
 sem_t toComputeBufferFull;
 
+int toComputeAmount;
+
+int toReadAmount;
+
+pthread_mutex_t toReadAmountMutex;
+
 
 /* ******************************************************************
  *                          Buffer computed
@@ -110,16 +116,12 @@ void *fileReader(void *filename) {
     /** @var float : Imaginary part of the complex number */
     float b;
 
-    /** @var int : Line counter */
-    int lineNumber;
 
     int matched = fscanf(file, "%s %i %i %f %f\n", name, &width, &height, &a, &b);
-
 
     /* TODO : if # in line, skip */
     while (matched != EOF)
     {
-        lineNumber++;
         if (matched == 5 && name[0] != '#') {
             fractal_t * fractal = fractal_new(name, width, height, a, b);
 
@@ -132,6 +134,8 @@ void *fileReader(void *filename) {
                 printf(" - Pushed fractal %s->%s (%f + %fi. Image size : %i x %i) into the \"to compute\" buffer\n", (char *)filename, name, a, b, width, height);
             }
 
+            toComputeAmount++;
+
             pthread_mutex_unlock(&toComputeBufferMutex);
             sem_post(&toComputeBufferFull);
 
@@ -140,16 +144,23 @@ void *fileReader(void *filename) {
         matched = fscanf(file, "%s %i %i %f %f\n", name, &width, &height, &a, &b);
     }
 
+    pthread_mutex_lock(&toReadAmountMutex);
+    toReadAmount--;
+    pthread_mutex_unlock(&toReadAmountMutex);
+
     pthread_exit(NULL);
 }
 
 void *computer() {
-    while (true) {
+
+    while (toComputeAmount > 0 || toReadAmount > 0) {
         sem_wait(&toComputeBufferFull);
         pthread_mutex_lock(&toComputeBufferMutex);
 
         fractal_t *poppedFractal = popFromBuffer(&toComputeBuffer);
         printf("> Computing fractal : %s\n\n", fractal_get_name(poppedFractal));
+
+        toComputeAmount--;
 
         pthread_mutex_unlock(&toComputeBufferMutex);
         sem_post(&toComputeBufferEmpty);
@@ -188,6 +199,7 @@ void *computer() {
 
             pthread_mutex_unlock(&computedBufferMutex);
         }
+        sem_getvalue(&toComputeBufferFull, &toComputeAmount);
     }
     pthread_exit(NULL);
 }
@@ -209,11 +221,19 @@ void makeMutexSem() {
     }
 
     /*
-     * Initializing mutex and semaphores concerning the "computed" buffer
+     * Initializing mutex concerning the "computed" buffer
      */
     if (pthread_mutex_init(&computedBufferMutex, NULL) != EXIT_SUCCESS) {
         fprintf(stderr, "%s\n", "Error while initializing the \"computed\" buffer mutex");
     }
+
+    /*
+     * Initializing mutex concerning the "computed" buffer
+     */
+    if (pthread_mutex_init(&toReadAmountMutex, NULL) != EXIT_SUCCESS) {
+        fprintf(stderr, "%s\n", "Error while initializing the toReadAmount mutex");
+    }
+
 }
 
 int main(int argc, char *argv[])
@@ -262,6 +282,8 @@ int main(int argc, char *argv[])
 
     /** @var int : total amout of files */
     int totalFiles = argc - argIndex -1;
+
+    toReadAmount = totalFiles;
 
     /** @var pthread_t[] : Table containing the file reading threads */
     pthread_t fileReaderThreads[totalFiles];
