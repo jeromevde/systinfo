@@ -162,12 +162,16 @@ void *fileReader(void *filename) {
             sem_wait(&toComputeBufferEmpty);
             pthread_mutex_lock(&toComputeBufferMutex);
 
-            if (pushInBuffer(&toComputeBuffer, fractal) == EXIT_FAILURE) {
-                fprintf(stderr, "%s\n", "Error while pushing into the \"to compute\" buffer");
+            if (!nameAlreadyUsed(&toComputeBuffer, name)) {
+                if (pushInBuffer(&toComputeBuffer, fractal) == EXIT_FAILURE) {
+                    fprintf(stderr, "%s\n", "Error while pushing into the \"to compute\" buffer");
+                }
+
+                toComputeAmount++;
             } else {
-                //printf(" - Pushed fractal %s->%s (%f + %fi. Image size : %i x %i) into the \"to compute\" buffer\n", (char *)filename, name, a, b, width, height);
+                fprintf(stderr, "Fractal %s has been ignored (duplicata)\n", name);
             }
-            toComputeAmount++;
+
 
             pthread_mutex_unlock(&toComputeBufferMutex);
             sem_post(&toComputeBufferFull);
@@ -222,7 +226,9 @@ void *computer() {
             if (i!=0) {
                 printf("%s\n", "did not remove any temporary file");
             }
+
             pthread_mutex_lock(&computedBufferMutex);
+
             if (computedBuffer == NULL) {
                 pushInBuffer(&computedBuffer, poppedFractal);
             } else {
@@ -301,6 +307,8 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
 
+    /* TODO : change options reading system */
+
     /*
      * Is the -d arg given
      */
@@ -377,13 +385,18 @@ int main(int argc, char *argv[])
     }
 
     /*
-     * Joining the computing threads
+     * This loop is used to make sure the computers have computed every fractals.
+     * We use this one in order to be able to end the thread even if the program is waiting inside the infinite
+     * loop at a sem_wait() point.
      */
-    /*for(int i = 0; i<maxthreads; i++) {
-        pthread_join(computerThreads[i], NULL);
-    }*/
-
     while (toComputeAmount > 0 || toReadAmount > 0);
+
+    if (!printAll) {
+        while (computedBuffer != NULL) {
+            fractal_t *poppedFractal = popFromBuffer(computedBuffer);
+
+        }
+    }
 
     char outputFile = *argv[argIndex];
 
