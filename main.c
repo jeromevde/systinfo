@@ -346,6 +346,14 @@ int main(int argc, char *argv[])
         pthread_join(computerThreads[i], NULL);
     }
 
+    /*
+    * remove temporary @STDIN_FILE
+    */
+    int i = remove(STDIN_FILE);
+    if (i!=0) {
+      printf("%s\n", "failed to remvoe");
+    }
+
     char outputFile = *argv[argIndex];
 
     if (printAll && outputFile) {
