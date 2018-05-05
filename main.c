@@ -85,30 +85,29 @@ pthread_mutex_t computedBufferMutex;
 
 
 #define STDIN_FILE "user_input.txt"
-/*
-* function for reading on standard input
-*/
-  void readSTDIN(){
+/**
+ * function for reading on standard input
+ */
+void readSTDIN(){
     FILE* userInput =  fopen(STDIN_FILE, "w");
     bool read = true;
     char buffer[100];
     while(read){
-      printf("%s\n", "Enter fractal formatted as follow: [name width height a b]" );
-      fgets(buffer,sizeof(buffer),stdin);
-      int r = fputs(buffer,userInput);
-      if (r<0) {
-        printf("%s\n","Failed to print fractal in temporary file user_input.txt" );
-      }
-      printf("%s","Do you want to enter another fractal? Y/N :");
-      fgets(buffer, sizeof(buffer),stdin);
-      printf("%s\n",buffer );
-      if(buffer[0]=='N'||buffer[0]=='n'){
-        read =false;
-      }
+        printf("%s\n", "Enter fractal formatted as follow: [name width height a b]" );
+        fgets(buffer,sizeof(buffer), stdin);
+        int r = fputs(buffer,userInput);
+        if (r<0) {
+            printf("%s\n","Failed to print fractal in temporary file %s", STDIN_FILE);
+        }
+        printf("%s","Do you want to enter another fractal? Y/N :");
+        fgets(buffer, sizeof(buffer), stdin);
+        if(buffer[0]=='N'||buffer[0]=='n'){
+            read =false;
+        }
     }
     fflush(userInput); //push everything to memory
     close(userInput); //close stream before accessing it
-  }
+}
 
 
 /**
@@ -166,7 +165,7 @@ void *fileReader(void *filename) {
             if (pushInBuffer(&toComputeBuffer, fractal) == EXIT_FAILURE) {
                 fprintf(stderr, "%s\n", "Error while pushing into the \"to compute\" buffer");
             } else {
-                printf(" - Pushed fractal %s->%s (%f + %fi. Image size : %i x %i) into the \"to compute\" buffer\n", (char *)filename, name, a, b, width, height);
+                //printf(" - Pushed fractal %s->%s (%f + %fi. Image size : %i x %i) into the \"to compute\" buffer\n", (char *)filename, name, a, b, width, height);
             }
             toComputeAmount++;
 
@@ -187,14 +186,13 @@ void *fileReader(void *filename) {
 
 void *computer() {
 
-    while (toComputeAmount > 0 || toReadAmount > 0) {
+    while (true) {
         sem_wait(&toComputeBufferFull);
         pthread_mutex_lock(&toComputeBufferMutex);
 
         fractal_t *poppedFractal = popFromBuffer(&toComputeBuffer);
-        printf("> Computing fractal : %s\n\n", fractal_get_name(poppedFractal));
+        //printf("> Computing fractal : %s\n\n", fractal_get_name(poppedFractal));
 
-        toComputeAmount--;
 
         pthread_mutex_unlock(&toComputeBufferMutex);
         sem_post(&toComputeBufferEmpty);
@@ -211,18 +209,19 @@ void *computer() {
 
         poppedFractal->average = average;
 
-        printf("> Finished fractal : %s (average = %f)\n\n", fractal_get_name(poppedFractal), average);
+        //printf("> Finished fractal : %s (average = %f)\n\n", fractal_get_name(poppedFractal), average);
 
         if (printAll) {
             write_bitmap_sdl(poppedFractal, strcat((char *)fractal_get_name(poppedFractal),".bmp"));
             fractal_free(poppedFractal);
-        } else {    /*
-    * remove temporary @STDIN_FILE
-    */
-    int i = remove(STDIN_FILE);
-    if (i!=0) {
-      printf("%s\n", "did not remove any temporary file");
-    }
+        } else {
+            /*
+             * remove temporary @STDIN_FILE
+             */
+            int i = remove(STDIN_FILE);
+            if (i!=0) {
+                printf("%s\n", "did not remove any temporary file");
+            }
             pthread_mutex_lock(&computedBufferMutex);
             if (computedBuffer == NULL) {
                 pushInBuffer(&computedBuffer, poppedFractal);
@@ -239,7 +238,10 @@ void *computer() {
 
             pthread_mutex_unlock(&computedBufferMutex);
         }
-        sem_getvalue(&toComputeBufferFull, &toComputeAmount);
+
+        pthread_mutex_lock(&toComputeBufferMutex);
+        toComputeAmount--;
+        pthread_mutex_unlock(&toComputeBufferMutex);
     }
     pthread_exit(NULL);
 }
@@ -377,10 +379,11 @@ int main(int argc, char *argv[])
     /*
      * Joining the computing threads
      */
-    for(int i = 0; i<maxthreads; i++) {
+    /*for(int i = 0; i<maxthreads; i++) {
         pthread_join(computerThreads[i], NULL);
-    }
+    }*/
 
+    while (toComputeAmount > 0 || toReadAmount > 0);
 
     char outputFile = *argv[argIndex];
 
