@@ -206,7 +206,13 @@ void *computer() {
         if (printAll) {
             write_bitmap_sdl(poppedFractal, strcat((char *)fractal_get_name(poppedFractal),".bmp"));
             fractal_free(poppedFractal);
-        } else {
+        } else {    /*
+    * remove temporary @STDIN_FILE
+    */
+    int i = remove(STDIN_FILE);
+    if (i!=0) {
+      printf("%s\n", "did not remove any temporary file");
+    }
             pthread_mutex_lock(&computedBufferMutex);
             if (computedBuffer == NULL) {
                 pushInBuffer(&computedBuffer, poppedFractal);
@@ -340,19 +346,20 @@ int main(int argc, char *argv[])
     }
 
     /*
+    * remove temporary @STDIN_FILE
+    */
+    int i = remove(STDIN_FILE);
+    if (i!=0) {
+      printf("%s\n", "did not remove any temporary file");
+    }
+
+    /*
      * Joining the computing threads
      */
     for(int i = 0; i<maxthreads; i++) {
         pthread_join(computerThreads[i], NULL);
     }
 
-    /*
-    * remove temporary @STDIN_FILE
-    */
-    int i = remove(STDIN_FILE);
-    if (i!=0) {
-      printf("%s\n", "failed to remvoe");
-    }
 
     char outputFile = *argv[argIndex];
 
