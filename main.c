@@ -133,7 +133,6 @@ void *fileReader(void *filename) {
             } else {
                 printf(" - Pushed fractal %s->%s (%f + %fi. Image size : %i x %i) into the \"to compute\" buffer\n", (char *)filename, name, a, b, width, height);
             }
-
             toComputeAmount++;
 
             pthread_mutex_unlock(&toComputeBufferMutex);
