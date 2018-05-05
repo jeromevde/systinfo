@@ -30,3 +30,15 @@ fractal_t* popFromBuffer(struct node **head){
 	free(oldhead);
 	return popped_fractal;
 }
+
+int nameAlreadyUsed(node_t **head, char *name) {
+	node_t *current = head;
+	while (current != NULL) {
+		if (strncmp(current->fractal->name, name) == 0) {
+			return 1;
+		}
+		current = current->next;
+	}
+
+	return 0;
+}

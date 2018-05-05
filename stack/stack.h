@@ -45,3 +45,5 @@ void flushBuffer(node_t *head);
 *
 */
 fractal_t* popFromBuffer(struct node **head);
+
+int nameAlreadyUsed(node_t **head, char *name);
