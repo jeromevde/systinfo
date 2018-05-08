@@ -162,15 +162,15 @@ void *fileReader(void *filename) {
             sem_wait(&toComputeBufferEmpty);
             pthread_mutex_lock(&toComputeBufferMutex);
 
-            if (!nameAlreadyUsed(&toComputeBuffer, name)) {
+	    // if (!nameAlreadyUsed(&toComputeBuffer, name)) {
                 if (pushInBuffer(&toComputeBuffer, fractal) == EXIT_FAILURE) {
                     fprintf(stderr, "%s\n", "Error while pushing into the \"to compute\" buffer");
                 }
 
                 toComputeAmount++;
-            } else {
-                fprintf(stderr, "Fractal %s has been ignored (duplicata)\n", name);
-            }
+	    //} else {
+            //    fprintf(stderr, "Fractal %s has been ignored (duplicata)\n", name);
+            //}
 
 
             pthread_mutex_unlock(&toComputeBufferMutex);
