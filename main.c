@@ -113,8 +113,9 @@ void readSTDIN(){
 /**
  * Thread reading the input files
  *
- * File reader inspired by the following forum topic :
- * https://stackoverflow.com/questions/11168519/fscanf-or-fgets-reading-a-file-line-after-line
+ * File reader inspired by the following forum topics :
+ * - (Pattern Matching) : https://stackoverflow.com/questions/11168519/fscanf-or-fgets-reading-a-file-line-after-line
+ * - (Regular expression) : https://stackoverflow.com/questions/20108334/traverse-file-line-by-line-using-fscanf
  *
  * @param filename
  * @return result
@@ -135,7 +136,10 @@ void *fileReader(void *filename) {
         pthread_exit((void *)-1);
     }
 
-    /** @var string : Fractal name to be read , size+1*/
+    /** @var string : Line to be read */
+    char line[128];
+
+    /** @var string : Fractal name to be read , size + 1 */
     char name[65];
 
     /** @var int : Image width */
@@ -150,13 +154,13 @@ void *fileReader(void *filename) {
     /** @var float : Imaginary part of the complex number */
     float b;
 
+    int matched = fscanf(file, "%[^\n]\n", line);
 
-    int matched = fscanf(file, "%s %i %i %f %f", name, &width, &height, &a, &b);
-
-    /* TODO : if # in line, skip */
     while (matched != EOF)
     {
-        if (matched == 5 && name[0] != '#') {
+        if (matched == 1 && line[0] != '#') {
+            sscanf(line, "%s %i %i %f %f", name, &width, &height, &a, &b); // NOLINT
+
             fractal_t * fractal = fractal_new(name, width, height, a, b);
 
             sem_wait(&toComputeBufferEmpty);
@@ -171,10 +175,10 @@ void *fileReader(void *filename) {
 
             pthread_mutex_unlock(&toComputeBufferMutex);
             sem_post(&toComputeBufferFull);
-            printf("Added the fractal \"%s\" to the Buffer\n", name);
+            printf("Added the fractal \"%s\" (%ix%i) %f + %fi to the Buffer\n", name, width, height, a, b);
 
         }
-        matched = fscanf(file, "\n%s %i %i %f %f\n", name, &width, &height, &a, &b);
+        matched = fscanf(file, "%[^\n]\n", line);
     }
 
     pthread_mutex_lock(&toReadAmountMutex);
@@ -227,7 +231,7 @@ void *computer() {
                 }
 
                 if (average >= previousAverage) {
-                    pushInBuffer(computedBuffer, poppedFractal);
+                    pushInBuffer(&computedBuffer, poppedFractal);
                 }
             }
 
@@ -238,7 +242,7 @@ void *computer() {
         toComputeAmount--;
         pthread_mutex_unlock(&toComputeBufferMutex);
     }
-    pthread_exit(NULL);
+    //pthread_exit(NULL); Willingly removed as it is never reached
 }
 
 void makeMutexSem() {
@@ -275,8 +279,6 @@ void makeMutexSem() {
 
 int main(int argc, char *argv[])
 {
-
-    /* TODO : Wait for everyone to be finished */
 
     /** @var int : args counter */
     int argIndex = 1;
