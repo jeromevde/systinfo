@@ -106,7 +106,7 @@ void readSTDIN(){
         }
     }
     fflush(userInput); //push everything to memory
-    close((int) userInput); //close stream before accessing it
+    close(userInput); //close stream before accessing it
 }
 
 
@@ -217,8 +217,7 @@ void *computer() {
 
         if (printAll) {
             write_bitmap_sdl(poppedFractal, strcat((char *)fractal_get_name(poppedFractal),".bmp"));
-            fractal_free(poppedFractal);
-        } else {
+        }
 
             pthread_mutex_lock(&computedBufferMutex);
 
@@ -232,11 +231,13 @@ void *computer() {
 
                 if (average >= previousAverage) {
                     pushInBuffer(&computedBuffer, poppedFractal);
+                } else {
+                    fractal_free(poppedFractal);
                 }
             }
 
             pthread_mutex_unlock(&computedBufferMutex);
-        }
+
 
         pthread_mutex_lock(&toComputeBufferMutex);
         toComputeAmount--;
@@ -305,7 +306,7 @@ int main(int argc, char *argv[])
      */
     if (strcmp(argv[argIndex], "-d") == 0) {
         printAll = true;
-        printf("%s\n", "All fractals will be drawn");
+        //printf("%s\n", "All fractals will be drawn");
         argIndex++;
     }
 
@@ -335,15 +336,13 @@ int main(int argc, char *argv[])
      * Running through all args containing file inputs
      */
     for (int fileIndex = 0; fileIndex < totalFiles; fileIndex++) {
-        /* TODO : Only one stdin */
 
-            /* Initializing file reading threads */
-            int threadCreationResult = pthread_create(&fileReaderThreads[fileIndex], NULL, &fileReader, (void *) argv[argIndex]);
+        /* Initializing file reading threads */
+        int threadCreationResult = pthread_create(&fileReaderThreads[fileIndex], NULL, &fileReader, (void *) argv[argIndex]);
 
-            if (threadCreationResult != 0) {
-                fprintf(stderr, "%s : %s\n", "Error while creating the thread to read the following file", argv[argIndex]);
-            }
-
+        if (threadCreationResult != 0) {
+            fprintf(stderr, "%s : %s\n", "Error while creating the thread to read the following file", argv[argIndex]);
+        }
 
         argIndex++;
     }
@@ -386,23 +385,11 @@ int main(int argc, char *argv[])
     */
     remove(STDIN_FILE);
 
-    if (!printAll) {
-        printf("%s\n", computedBuffer->fractal->name);
-        fractal_t *poppedFractal = popFromBuffer(&computedBuffer);
-        printf("Printing fractal %s (average = %f) into the following file : %s\n", fractal_get_name(poppedFractal), poppedFractal->average, argv[argIndex]);
-        write_bitmap_sdl(poppedFractal, argv[argIndex]);
-        fractal_free(poppedFractal);
-        flushBuffer(computedBuffer);
-    }
-
-
-    /*
-     * How do we know if it's finished ?
-     * - stdin must be ok
-     * - all fractals from inputs + stdin must be done
-     */
-
-    /* TODO : FREE */
+    fractal_t *poppedFractal = popFromBuffer(&computedBuffer);
+    printf("Printing fractal %s (average = %f) into the following file : %s\n", fractal_get_name(poppedFractal), poppedFractal->average, argv[argIndex]);
+    write_bitmap_sdl(poppedFractal, argv[argIndex]);
+    fractal_free(poppedFractal);
+    flushBuffer(computedBuffer);
 
     return 0;
 }
