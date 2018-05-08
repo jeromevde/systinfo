@@ -5,8 +5,8 @@
 
 typedef struct fractal {
     char *name;
-    float a;
-    float b;
+    double a;
+    double b;
     unsigned int width;
     unsigned int height;
     int *values; // les valeurs de la fractale

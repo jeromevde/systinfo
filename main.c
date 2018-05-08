@@ -97,7 +97,7 @@ void readSTDIN(){
         fgets(buffer,sizeof(buffer), stdin);
         int r = fputs(buffer,userInput);
         if (r<0) {
-            printf("%s\n","Failed to print fractal in temporary file %s", STDIN_FILE);
+            printf("%s %s\n","Failed to print fractal in temporary file", STDIN_FILE);
         }
         printf("%s","Do you want to enter another fractal? Y/N :");
         fgets(buffer, sizeof(buffer), stdin);
@@ -106,7 +106,7 @@ void readSTDIN(){
         }
     }
     fflush(userInput); //push everything to memory
-    close(userInput); //close stream before accessing it
+    close((int) userInput); //close stream before accessing it
 }
 
 
@@ -151,7 +151,7 @@ void *fileReader(void *filename) {
     float b;
 
 
-    int matched = fscanf(file, "%s %i %i %f %f\n", name, &width, &height, &a, &b);
+    int matched = fscanf(file, "%s %i %i %f %f", name, &width, &height, &a, &b);
 
     /* TODO : if # in line, skip */
     while (matched != EOF)
@@ -162,23 +162,19 @@ void *fileReader(void *filename) {
             sem_wait(&toComputeBufferEmpty);
             pthread_mutex_lock(&toComputeBufferMutex);
 
-	    // if (!nameAlreadyUsed(&toComputeBuffer, name)) {
-                if (pushInBuffer(&toComputeBuffer, fractal) == EXIT_FAILURE) {
-                    fprintf(stderr, "%s\n", "Error while pushing into the \"to compute\" buffer");
-                }
+            if (pushInBuffer(&toComputeBuffer, fractal) == EXIT_FAILURE) {
+                fprintf(stderr, "%s\n", "Error while pushing into the \"to compute\" buffer");
+            }
 
-                toComputeAmount++;
-	    //} else {
-            //    fprintf(stderr, "Fractal %s has been ignored (duplicata)\n", name);
-            //}
+            toComputeAmount++;
 
 
             pthread_mutex_unlock(&toComputeBufferMutex);
             sem_post(&toComputeBufferFull);
-
+            printf("Added the fractal \"%s\" to the Buffer\n", name);
 
         }
-        matched = fscanf(file, "%s %i %i %f %f\n", name, &width, &height, &a, &b);
+        matched = fscanf(file, "\n%s %i %i %f %f\n", name, &width, &height, &a, &b);
     }
 
     pthread_mutex_lock(&toReadAmountMutex);
@@ -219,13 +215,6 @@ void *computer() {
             write_bitmap_sdl(poppedFractal, strcat((char *)fractal_get_name(poppedFractal),".bmp"));
             fractal_free(poppedFractal);
         } else {
-            /*
-             * remove temporary @STDIN_FILE
-             */
-            int i = remove(STDIN_FILE);
-            if (i!=0) {
-                printf("%s\n", "did not remove any temporary file");
-            }
 
             pthread_mutex_lock(&computedBufferMutex);
 
@@ -377,32 +366,33 @@ int main(int argc, char *argv[])
     }
 
     /*
-    * remove temporary @STDIN_FILE
-    */
-    int i = remove(STDIN_FILE);
-    if (i!=0) {
-      printf("%s\n", "did not remove any temporary file");
-    }
-
-    /*
      * This loop is used to make sure the computers have computed every fractals.
      * We use this one in order to be able to end the thread even if the program is waiting inside the infinite
      * loop at a sem_wait() point.
      */
     while (toComputeAmount > 0 || toReadAmount > 0);
 
+    /*
+     * Starting the computing threads
+     */
+    for (int i = 0; i < maxthreads; i++) {
+        pthread_cancel(computerThreads[i]);
+    }
+
+    /*
+    * remove temporary @STDIN_FILE
+    */
+    remove(STDIN_FILE);
+
     if (!printAll) {
-        while (computedBuffer != NULL) {
-            fractal_t *poppedFractal = popFromBuffer(computedBuffer);
-
-        }
+        printf("%s\n", computedBuffer->fractal->name);
+        fractal_t *poppedFractal = popFromBuffer(&computedBuffer);
+        printf("Printing fractal %s (average = %f) into the following file : %s\n", fractal_get_name(poppedFractal), poppedFractal->average, argv[argIndex]);
+        write_bitmap_sdl(poppedFractal, argv[argIndex]);
+        fractal_free(poppedFractal);
+        flushBuffer(computedBuffer);
     }
 
-    char outputFile = *argv[argIndex];
-
-    if (printAll && outputFile) {
-
-    }
 
     /*
      * How do we know if it's finished ?
