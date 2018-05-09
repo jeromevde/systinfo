@@ -106,7 +106,7 @@ void readSTDIN(){
         }
     }
     fflush(userInput); //push everything to memory
-    close(userInput); //close stream before accessing it
+    fclose(userInput); //close stream before accessing it
 }
 
 

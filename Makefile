@@ -1,8 +1,10 @@
 GCC = gcc
 
 CFLAGS = -g -Wall -W -std=c99
-LDFLAGS = -lm  -L/usr/local/lib -L$(HOME)/local/lib -lSDL -lpthread
-CUNITFLAGS= -L$(HOME)/local/lib -lcunit
+LDFLAGS = -lm -lSDL -lpthread
+
+LCUNIT= -L$(HOME)/local/lib -lcunit
+CCUNIT = -I$(HOME)/local/include -lcunit
 
 LIBFRACTAL = libfractal/libfractal.a
 LIBSTACK = stack/stack.a
@@ -28,14 +30,16 @@ $(LIBFRACTAL):
 $(LIBSTACK):
 	@cd stack && make
 
-testProgram: tests/test
-	@LD_LIBRARY_PATH=$(HOME)/local/lib ./tests/test
+test:
+	@make all
+	@make tests/test
+	@./tests/test
 
-test/test: tests/test.o $(LIBRARIES)
-	@$(GCC)  $(LDFLAGS) -o tests/test tests/test.o $(LIBRARIES) $(CUNITFLAGS)
+tests/test: tests/test.o $(LIBRARIES)
+	@$(GCC) -o tests/test tests/test.o $(LIBRARIES)  $(LDFLAGS) $(LCUNIT)
 
-test/test.o: tests/test.c
-	@$(GCC) -c -o tests/test.o tests/test.c  $(CFLAGS)
+tests/test.o: tests/test.c
+	@$(GCC) -c -o tests/test.o tests/test.c  $(CFLAGS) $(CCUNIT)
 
 
 clean:
