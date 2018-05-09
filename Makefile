@@ -16,8 +16,12 @@ all:
 	@make clean
 	@make main
 
+test:
+	@make all
+	@./tests/test
 
-main: main.o $(LIBRARIES)
+
+main: main.o $(LIBRARIES) tests/test
 	@$(GCC) -o main main.o $(LIBRARIES) $(LDFLAGS)
 	@echo "Project made"
 
@@ -29,11 +33,6 @@ $(LIBFRACTAL):
 
 $(LIBSTACK):
 	@cd stack && make
-
-test:
-	@make all
-	@make tests/test
-	@./tests/test
 
 tests/test: tests/test.o $(LIBRARIES)
 	@$(GCC) -o tests/test tests/test.o $(LIBRARIES)  $(LDFLAGS) $(LCUNIT)
