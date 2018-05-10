@@ -21,10 +21,15 @@ void testGetterSetter(void){
 
 
 	CU_ASSERT_STRING_EQUAL(fractal_get_name(myfractal), "myfractal");
+
 	CU_ASSERT_EQUAL((int)fractal_get_a(myfractal), (int)0.5 );
+
 	CU_ASSERT_EQUAL((int)fractal_get_b(myfractal), (int)0.5 );
+
 	CU_ASSERT_EQUAL(fractal_get_width(myfractal), 1000);
+
 	CU_ASSERT_EQUAL(fractal_get_height(myfractal),1000);
+
 	CU_ASSERT_EQUAL((int)fractal_get_value(myfractal, 0,3),(int) 666);
 
 	fractal_free(myfractal);
@@ -36,16 +41,26 @@ void testGetterSetter(void){
 void testPushPopStack1(void) {
 
 	fractal_t *fractal1 = fractal_new("fractal1", 1000, 1000,1.0, 1.0);
+
 	node_t * head = NULL;
+
 	pushInBuffer(&head, fractal1);
+
 	fractal_t *fractal2 = fractal_new("fractal2", 1000, 1000,1.0, 1.0);
+
 	pushInBuffer(&head, fractal2);
-	
+
+
 	CU_ASSERT_EQUAL(fractal2, head->fractal);
+
 	CU_ASSERT_EQUAL(fractal1, head->next->fractal);
+
 	popFromBuffer(&head);
+
 	CU_ASSERT_EQUAL(NULL, head->next);
+
 	popFromBuffer(&head);
+
 	CU_ASSERT_EQUAL(NULL, head);
 
 	free(fractal1);
@@ -57,11 +72,17 @@ void testPushPopStack1(void) {
 * Tests the flush function of the stack
 */
 void testFlushBuffer(void) {
+
 	fractal_t *fractal1 = fractal_new("fractal1", 1000, 1000,1.0, 1.0);
+
 	node_t * head = NULL;
+
 	pushInBuffer(&head, fractal1);
+
 	fractal_t *fractal2 = fractal_new("fractal2", 1000, 1000,1.0, 1.0);
+
 	pushInBuffer(&head, fractal2);
+
 	flushBuffer(&head);
 }
 
@@ -84,9 +105,11 @@ int main()
 {
    CU_pSuite pSuite = NULL;
 
+
    /* initialize the CUnit test registry */
    if (CUE_SUCCESS != CU_initialize_registry())
       return CU_get_error();
+
 
    /* add a suite to the registry */
    pSuite = CU_add_suite("Suite_1", init_suite1, clean_suite1);
@@ -94,6 +117,7 @@ int main()
       CU_cleanup_registry(); //libérer les resources
       return CU_get_error();
    }
+
 
    /* add the tests to the suite */
    if (NULL == CU_add_test(pSuite, "test get et set de libfractal", testPushPopStack1)
@@ -103,6 +127,7 @@ int main()
       CU_cleanup_registry();
       return CU_get_error();
    }
+
 
    /* Run all tests using the CUnit Basic interface */
    CU_basic_set_mode(CU_BRM_VERBOSE); //un maximum de details
