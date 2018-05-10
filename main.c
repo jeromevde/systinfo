@@ -162,22 +162,25 @@ void *fileReader(void *filename) {
             sscanf(line, "%s %i %i %f %f", name, &width, &height, &a, &b); // NOLINT
 
             fractal_t * fractal = fractal_new(name, width, height, a, b);
+            if (fractal==NULL) {
+                fprintf(stderr, "Unable to malloc the new fractal\n");
+            }else {
 
-            sem_wait(&toComputeBufferEmpty);
-            pthread_mutex_lock(&toComputeBufferMutex);
+                sem_wait(&toComputeBufferEmpty);
+                pthread_mutex_lock(&toComputeBufferMutex);
 
-            if (pushInBuffer(&toComputeBuffer, fractal) == EXIT_FAILURE) {
-                fprintf(stderr, "%s\n", "Error while pushing into the \"to compute\" buffer");
+                if (pushInBuffer(&toComputeBuffer, fractal) == EXIT_FAILURE) {
+                    fprintf(stderr, "%s\n", "Error while pushing into the \"to compute\" buffer");
+                }
+
+                toComputeAmount++;
+
+
+                pthread_mutex_unlock(&toComputeBufferMutex);
+                sem_post(&toComputeBufferFull);
+                /** TODO : REMOVE */
+                //printf("Added the fractal \"%s\" (%ix%i) %f + %fi to the Buffer\n", name, width, height, a, b);
             }
-
-            toComputeAmount++;
-
-
-            pthread_mutex_unlock(&toComputeBufferMutex);
-            sem_post(&toComputeBufferFull);
-            /** TODO : REMOVE */
-            //printf("Added the fractal \"%s\" (%ix%i) %f + %fi to the Buffer\n", name, width, height, a, b);
-
         }
         matched = fscanf(file, "%[^\n]\n", line);
     }
