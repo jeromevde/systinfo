@@ -2,13 +2,15 @@
 #include "stack.h"
 
 
+
+
+
 int pushInBuffer(node_t **head, fractal_t *value){
     node_t *newhead = (node_t *) malloc(sizeof(node_t));
     if (newhead == NULL) return EXIT_FAILURE;
-
-	newhead->fractal = value;
-	newhead->next = (*head);
-	*head = newhead;
+  	newhead->fractal = value;
+  	newhead->next = (*head);
+  	*head = newhead;
 
 	return EXIT_SUCCESS;
 }
@@ -18,7 +20,7 @@ void flushBuffer(node_t *head) {
         node_t *newHead = head->next;
         fractal_free(head->fractal);
         free(head);
-        flushBuffer(newHead);
+        if (newHead != NULL) flushBuffer(newHead);
     }
 }
 
