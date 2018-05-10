@@ -56,10 +56,10 @@ void testPushPopStack1(void) {
 * Tests the flush function of the stack
 */
 void testFlushBuffer(void) {
-	fractal_t *fractal1 = fracatal_new("fractal1", 1000, 1000,1.0, 1.0)
+	fractal_t *fractal1 = fractal_new("fractal1", 1000, 1000,1.0, 1.0);
 	node_t * head = NULL;
 	pushInBuffer(&head, fractal1);
-	fractal_t *fractal2 = fracatal_new("fractal2", 1000, 1000,1.0, 1.0)
+	fractal_t *fractal2 = fractal_new("fractal2", 1000, 1000,1.0, 1.0);
 	pushInBuffer(&head, fractal2);
 	flushBuffer(&head);
 }
