@@ -179,7 +179,7 @@ void *fileReader(void *filename) {
                 pthread_mutex_unlock(&toComputeBufferMutex);
                 sem_post(&toComputeBufferFull);
                 /** TODO : REMOVE */
-                //printf("Added the fractal \"%s\" (%ix%i) %f + %fi to the Buffer\n", name, width, height, a, b);
+                printf("Added the fractal \"%s\" (%ix%i) %f + %fi to the Buffer\n", name, width, height, a, b);
             }
         }
         matched = fscanf(file, "%[^\n]\n", line);
@@ -200,7 +200,7 @@ void *computer() {
 
         fractal_t *poppedFractal = popFromBuffer(&toComputeBuffer);
         /** TODO : REMOVE */
-        //printf("> Computing fractal : %s\n\n", fractal_get_name(poppedFractal));
+        printf("> Computing fractal : %s\n\n", fractal_get_name(poppedFractal));
 
 
         pthread_mutex_unlock(&toComputeBufferMutex);
@@ -219,30 +219,30 @@ void *computer() {
         poppedFractal->average = average;
 
         /** TODO : REMOVE */
-        //printf("> Finished fractal : %s (average = %f)\n\n", fractal_get_name(poppedFractal), average);
+        printf("> Finished fractal : %s (average = %f)\n\n", fractal_get_name(poppedFractal), average);
 
         if (printAll) {
             write_bitmap_sdl(poppedFractal, strcat((char *)fractal_get_name(poppedFractal),".bmp"));
         }
 
-            pthread_mutex_lock(&computedBufferMutex);
+        pthread_mutex_lock(&computedBufferMutex);
 
-            if (computedBuffer == NULL) {
-                pushInBuffer(&computedBuffer, poppedFractal);
-            } else {
-                float previousAverage = computedBuffer->fractal->average;
-                if (average > previousAverage) {
-                    flushBuffer(computedBuffer);
-                }
-
-                if (average >= previousAverage) {
-                    pushInBuffer(&computedBuffer, poppedFractal);
-                } else {
-                    fractal_free(poppedFractal);
-                }
+        if (computedBuffer == NULL) {
+            pushInBuffer(&computedBuffer, poppedFractal);
+        } else {
+            float previousAverage = computedBuffer->fractal->average;
+            if (average > previousAverage) {
+                flushBuffer(computedBuffer);
             }
 
-            pthread_mutex_unlock(&computedBufferMutex);
+            if (average >= previousAverage) {
+                pushInBuffer(&computedBuffer, poppedFractal);
+            } else {
+                fractal_free(poppedFractal);
+            }
+        }
+
+        pthread_mutex_unlock(&computedBufferMutex);
 
 
         pthread_mutex_lock(&toComputeBufferMutex);
@@ -311,7 +311,7 @@ int main(int argc, char *argv[])
      */
     if (strcmp(argv[argIndex], "-d") == 0) {
         printAll = true;
-        //printf("%s\n", "All fractals will be drawn");
+        printf("%s\n", "All fractals will be drawn");
         argIndex++;
     }
 
@@ -396,7 +396,7 @@ int main(int argc, char *argv[])
     if (computedBuffer->next == NULL) {
         printf("Only one\n");
         fractal_t *poppedFractal = popFromBuffer(&computedBuffer);
-        printf("Printing fractal %s (average = %f) into the following file : %s\n", fractal_get_name(poppedFractal), poppedFractal->average, argv[argIndex]);
+        printf("Printing fractal %s (average = %f) into the following file : %s.bmp\n", fractal_get_name(poppedFractal), poppedFractal->average, argv[argIndex]);
         write_bitmap_sdl(poppedFractal, strcat(argv[argIndex], ".bmp"));
         fractal_free(poppedFractal);
     } else {
