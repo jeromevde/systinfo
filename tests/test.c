@@ -62,7 +62,7 @@ void testFlushBuffer(void) {
 	head->next = NULL;
 	fractal_t *fractal2 = (fractal_t*) malloc(sizeof(node_t));
 	pushInBuffer(&head, fractal2);
-	//flushBuffer(head);
+	flushBuffer(head);
 }
 
 
