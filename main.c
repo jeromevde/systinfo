@@ -178,8 +178,8 @@ void *fileReader(void *filename) {
 
                 pthread_mutex_unlock(&toComputeBufferMutex);
                 sem_post(&toComputeBufferFull);
-                /** TODO : REMOVE */
-                printf("Added the fractal \"%s\" (%ix%i) %f + %fi to the Buffer\n", name, width, height, a, b);
+                /** (fake TODO just to localize those printf in CLION) */
+                //printf("Added the fractal \"%s\" (%ix%i) %f + %fi to the Buffer\n", name, width, height, a, b);
             }
         }
         matched = fscanf(file, "%[^\n]\n", line);
@@ -199,8 +199,8 @@ void *computer() {
         pthread_mutex_lock(&toComputeBufferMutex);
 
         fractal_t *poppedFractal = popFromBuffer(&toComputeBuffer);
-        /** TODO : REMOVE */
-        printf("> Computing fractal : %s\n\n", fractal_get_name(poppedFractal));
+        /** (fake TODO just to localize those printf in CLION) */
+        //printf("> Computing fractal : %s\n\n", fractal_get_name(poppedFractal));
 
 
         pthread_mutex_unlock(&toComputeBufferMutex);
@@ -218,8 +218,8 @@ void *computer() {
 
         poppedFractal->average = average;
 
-        /** TODO : REMOVE */
-        printf("> Finished fractal : %s (average = %f)\n\n", fractal_get_name(poppedFractal), average);
+        /** (fake TODO just to localize those printf in CLION) */
+        //printf("> Finished fractal : %s (average = %f)\n\n", fractal_get_name(poppedFractal), average);
 
         if (printAll) {
             write_bitmap_sdl(poppedFractal, strcat((char *)fractal_get_name(poppedFractal),".bmp"));
@@ -394,13 +394,11 @@ int main(int argc, char *argv[])
      * If there's only one fractal with the highest average
      */
     if (computedBuffer->next == NULL) {
-        printf("Only one\n");
         fractal_t *poppedFractal = popFromBuffer(&computedBuffer);
         printf("Printing fractal %s (average = %f) into the following file : %s.bmp\n", fractal_get_name(poppedFractal), poppedFractal->average, argv[argIndex]);
         write_bitmap_sdl(poppedFractal, strcat(argv[argIndex], ".bmp"));
         fractal_free(poppedFractal);
     } else {
-        printf("Multiple\n");
         char tmp[64];
         fractal_t *poppedFractal;
         for (int i = 1; computedBuffer != NULL; i++) {
