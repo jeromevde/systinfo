@@ -12,11 +12,13 @@ LIBRARIES = libfractal/libfractal.a stack/stack.a
 
 #default recipe will automatically clean and build project
 #so no need to clean the project before building
+.PHONY: all
 all:
 	@make clean
 	@make main
 
-test:
+.PHONY: tests
+tests:
 	@make all
 	@./tests/test
 
@@ -40,7 +42,7 @@ tests/test: tests/test.o $(LIBRARIES)
 tests/test.o: tests/test.c
 	@$(GCC) -c -o tests/test.o tests/test.c  $(CFLAGS) $(CCUNIT)
 
-
+.PHONY: clean
 clean:
 	@find . -name \*.o -type f -delete
 	@find . -name \*.a -type f -delete
@@ -49,5 +51,6 @@ clean:
 	@rm -f *.bmp
 	@echo "Cleaned project"
 
+.PHONY: lib
 lib: $(LIBFRACTAL)
 	@echo "Library made"
