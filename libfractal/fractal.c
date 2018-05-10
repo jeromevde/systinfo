@@ -13,6 +13,7 @@ struct fractal *fractal_new(const char *name, int width, int height, double a, d
     }
 
     allocatedFractal->name = malloc(strlen(name) + sizeof(char));
+
     if (allocatedFractal->name == NULL) {
         free(allocatedFractal);
         return NULL;
@@ -37,7 +38,7 @@ struct fractal *fractal_new(const char *name, int width, int height, double a, d
 
 void fractal_free(struct fractal *f)
 {
-    free(f->values);
+    //free(f->values);
     free(f->name);
     free(f);
 }

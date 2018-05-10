@@ -26,7 +26,7 @@ fractal_t* popFromBuffer(struct node **head){
 void flushBuffer(node_t *head) {
     if (head != NULL) {
         node_t *newHead = head->next;
-        //fractal_free(head->fractal);
+        fractal_free(head->fractal);
         free(head);
         flushBuffer(newHead);
     }
