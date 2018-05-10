@@ -17,13 +17,16 @@
 */
 void testGetterSetter(void){
 	fractal_t *myfractal = fractal_new("myfractal", 1000,1000, 0.5,0.5);
-	CU_ASSERT_EQUAL(fractal_get_name(myfractal), "myfractal");
+	fractal_set_value(myfractal, 0, 3, 666);
+
+
+	CU_ASSERT_STRING_EQUAL(fractal_get_name(myfractal), "myfractal");
 	CU_ASSERT_EQUAL((int)fractal_get_a(myfractal), (int)0.5 );
 	CU_ASSERT_EQUAL((int)fractal_get_b(myfractal), (int)0.5 );
 	CU_ASSERT_EQUAL(fractal_get_width(myfractal), 1000);
 	CU_ASSERT_EQUAL(fractal_get_height(myfractal),1000);
-	fractal_set_value(myfractal, 0, 3, 666);
-	CU_ASSERT_EQUAL((int)fractal_get_value(myfractal, 0,3), 6);
+	CU_ASSERT_EQUAL((int)fractal_get_value(myfractal, 0,3),(int) 666);
+
 	fractal_free(myfractal);
 }
 
@@ -31,6 +34,7 @@ void testGetterSetter(void){
 *test le push et pop de l'object stack
 */
 void testPushPopStack1(void) {
+
 	fractal_t *fractal1 = (fractal_t*) malloc(sizeof(node_t));
 	node_t * head = (node_t*) malloc(sizeof(node_t));
 	head->fractal = fractal1;
@@ -42,6 +46,7 @@ void testPushPopStack1(void) {
 	CU_ASSERT_EQUAL(NULL, head->next);
 	popFromBuffer(&head);
 	CU_ASSERT_EQUAL(NULL, head);
+
 	free(fractal1);
 	free(fractal2);
 }
@@ -50,17 +55,16 @@ void testPushPopStack1(void) {
 /*
 * Tests the flush function of the stack
 */
-void testFlush(void) {
+void testFlushBuffer(void) {
 	fractal_t *fractal1 = (fractal_t*) malloc(sizeof(node_t));
 	node_t * head = (node_t*) malloc(sizeof(node_t));
 	head->fractal = fractal1;
 	fractal_t *fractal2 = (fractal_t*) malloc(sizeof(node_t));
 	pushInBuffer(&head, fractal2);
-
 	flushBuffer(head);
-
-	CU_ASSERT_PTR_NULL(head);
 }
+
+
 
 
 int init_suite1(void){
@@ -91,8 +95,9 @@ int main()
    }
 
    /* add the tests to the suite */
-   if ((NULL == CU_add_test(pSuite, "test getSetValue", testPushPopStack1))
-  		||NULL == CU_add_test(pSuite, "test fractale getter setter", testGetterSetter))
+   if (NULL == CU_add_test(pSuite, "test get et set de libfractal", testPushPopStack1)
+  		||NULL == CU_add_test(pSuite, "test push et pop de stack", testGetterSetter)
+			||NULL == CU_add_test(pSuite, "test si flushBuffer ne crash pas", testFlushBuffer))
    {
       CU_cleanup_registry();
       return CU_get_error();
