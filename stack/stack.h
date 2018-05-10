@@ -32,7 +32,7 @@ int pushInBuffer(node_t **head, fractal_t *value);
  *
  * @head : pointer to the top of the stack
  */
-void flushBuffer(node_t *head);
+void flushBuffer(node_t **head);
 
 
 /**
@@ -45,4 +45,3 @@ void flushBuffer(node_t *head);
 *
 */
 fractal_t* popFromBuffer(struct node **head);
-

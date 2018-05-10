@@ -1,9 +1,6 @@
 #include <stdlib.h>
 #include "stack.h"
 
-
-
-
 int pushInBuffer(node_t **head, fractal_t *value){
     node_t *newhead = (node_t *) malloc(sizeof(node_t));
     if (newhead == NULL) return EXIT_FAILURE;
@@ -14,6 +11,7 @@ int pushInBuffer(node_t **head, fractal_t *value){
 	return EXIT_SUCCESS;
 }
 
+
 fractal_t* popFromBuffer(struct node **head){
 	if(head == NULL) return NULL;
     node_t * oldhead = *head;
@@ -23,11 +21,20 @@ fractal_t* popFromBuffer(struct node **head){
     return popped_fractal;
 }
 
-void flushBuffer(node_t *head) {
+
+void freeBuffer(node_t *head){
     if (head != NULL) {
-        node_t *newHead = head->next;
-        fractal_free(head->fractal);
-        free(head);
-        flushBuffer(newHead);
+        node_t * oldhead = head;
+        head = head->next;
+        fractal_free(oldhead->fractal);
+        free(oldhead);
+        freeBuffer(head);
     }
 }
+
+
+void flushBuffer(node_t **head_ptr) {
+    node_t *head = *head_ptr;
+    *head_ptr = NULL;
+    freeBuffer(head);
+  }

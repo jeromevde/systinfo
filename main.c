@@ -232,7 +232,7 @@ void *computer() {
         } else {
             float previousAverage = computedBuffer->fractal->average;
             if (average > previousAverage) {
-                flushBuffer(computedBuffer);
+                flushBuffer(&computedBuffer);
             }
 
             if (average >= previousAverage) {
