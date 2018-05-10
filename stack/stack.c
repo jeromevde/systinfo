@@ -28,6 +28,6 @@ void flushBuffer(node_t *head) {
         node_t *newHead = head->next;
         fractal_free(head->fractal);
         free(head);
-        if (newHead != NULL) flushBuffer(newHead);
+        flushBuffer(newHead);
     }
 }

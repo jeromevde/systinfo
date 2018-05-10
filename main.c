@@ -54,7 +54,7 @@ int printAll = false;
  ****************************************************************** */
 
 /** @var node_t : First element of the "to compute" buffer */
-node_t *toComputeBuffer;
+node_t *toComputeBuffer = NULL;
 
 /** @var pthread_mutex_t : mutex locker of the "to compute" buffer */
 pthread_mutex_t toComputeBufferMutex;
@@ -77,7 +77,7 @@ pthread_mutex_t toReadAmountMutex;
  ****************************************************************** */
 
 /** @var node_t : First element of the "computed" buffer */
-node_t *computedBuffer;
+node_t *computedBuffer = NULL;
 
 /** @var pthread_mutex_t : mutex locker of the "computed" buffer */
 pthread_mutex_t computedBufferMutex;
