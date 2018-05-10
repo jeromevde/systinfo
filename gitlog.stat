@@ -1,0 +1,1256 @@
+commit 650d25762fc62b0093155ee10f8602bf8ba908ad
+Merge: 8ed60e2 057b806
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Thu May 10 18:19:37 2018 +0200
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 8ed60e2d7bdf2eab9f773c17a3a6fc8e540d9900
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Thu May 10 18:19:23 2018 +0200
+
+    Removed printers
+
+ main.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
+
+commit 057b8069d144f04825d08b279abc3ce034c0e3bb
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Thu May 10 18:09:11 2018 +0200
+
+    cunit
+
+ tests/test.c | 27 ++++++++++++++++++++++++++-
+ 1 file changed, 26 insertions(+), 1 deletion(-)
+
+commit 2188daf64cae5d2312696b2ed582bfa5c40b270a
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Thu May 10 18:00:40 2018 +0200
+
+    clean
+
+ libfractal/fractal.o | Bin 6768 -> 0 bytes
+ libfractal/tools.o   | Bin 12224 -> 0 bytes
+ tests/test           | Bin 22160 -> 0 bytes
+ tests/test.o         | Bin 16272 -> 0 bytes
+ 4 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 9248921ac0ef270ce26a027d0839e54cea5afe63
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Thu May 10 18:00:20 2018 +0200
+
+    change makefile test -> tests + .PHONY
+
+ Makefile     |   7 +++++--
+ tests/test   | Bin 22160 -> 22160 bytes
+ tests/test.c |   9 +++++----
+ tests/test.o | Bin 16064 -> 16272 bytes
+ 4 files changed, 10 insertions(+), 6 deletions(-)
+
+commit cf3565c3d574430e534419a4986720e4830c1b14
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Thu May 10 17:45:11 2018 +0200
+
+    fixing cunit
+
+ libfractal/fractal.o | Bin 0 -> 6768 bytes
+ libfractal/tools.o   | Bin 0 -> 12224 bytes
+ tests/test           | Bin 0 -> 22160 bytes
+ tests/test.c         |   4 ++--
+ tests/test.o         | Bin 0 -> 16064 bytes
+ 5 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 98edfe39155e217161490beceb58db91a0c3a559
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Thu May 10 17:43:17 2018 +0200
+
+    fixing cunit
+
+ tests/test.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
+
+commit ae62ec1824d09eebf618884a877f5233c0656956
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Thu May 10 17:35:15 2018 +0200
+
+    stack adaptation
+
+ libfractal/fractal.o | Bin 6768 -> 0 bytes
+ libfractal/tools.o   | Bin 12224 -> 0 bytes
+ tests/test           | Bin 22152 -> 0 bytes
+ tests/test.o         | Bin 15832 -> 0 bytes
+ 4 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 90b05c92078d31ec2f2867c9ea83894f3217c0fe
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Thu May 10 17:35:03 2018 +0200
+
+    stack adaptation
+
+ libfractal/fractal.c |   2 +-
+ libfractal/fractal.o | Bin 0 -> 6768 bytes
+ libfractal/tools.o   | Bin 0 -> 12224 bytes
+ main.c               |   2 +-
+ stack/stack.c        |  23 +++++++++++++++--------
+ stack/stack.h        |   3 +--
+ tests/test           | Bin 0 -> 22152 bytes
+ tests/test.c         |   2 +-
+ tests/test.o         | Bin 0 -> 15832 bytes
+ 9 files changed, 19 insertions(+), 13 deletions(-)
+
+commit d37f53581783f048715f012e5bd191015a59370c
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Thu May 10 17:09:09 2018 +0200
+
+    fixing cunit
+
+ libfractal/fractal.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 45de5ea187afe4d472c6b23bc673de21099b314b
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Thu May 10 17:08:25 2018 +0200
+
+    fixing cunit
+
+ libfractal/fractal.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 4f1b8b670eecb63326844c1ab3d063064e80c4a9
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Thu May 10 16:56:50 2018 +0200
+
+    fixing cunit
+
+ libfractal/fractal.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 80ebf84ef1010000c572381bf4abb5eb1df27c4d
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Thu May 10 16:55:33 2018 +0200
+
+    fixing cunit
+
+ libfractal/fractal.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit d33be16ebe317fe44bab18dcb0f418257083266b
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Thu May 10 16:54:53 2018 +0200
+
+    fixing cunit
+
+ libfractal/fractal.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 627dc4ccf8faf413926c92d7e5333adc55551fe5
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Thu May 10 16:51:34 2018 +0200
+
+    fixing cunit
+
+ libfractal/fractal.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 669ef1ee801663e2ec0903200bba6ee6c6936d94
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Thu May 10 16:50:41 2018 +0200
+
+    fixing cunit
+
+ libfractal/fractal.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 2d9565eb5d3bbbe6df7963ac3a4bdb96ebe4441b
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Thu May 10 16:49:53 2018 +0200
+
+    fixing cunit
+
+ libfractal/fractal.c | 3 ++-
+ stack/stack.c        | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+commit 31bb15af39e0551d064a29acd90db3a39d88834f
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Thu May 10 16:43:39 2018 +0200
+
+    test
+
+ stack/stack.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 30dbea4c88db5fa5b42d1c8da12572df2ab7df66
+Merge: 74c9ef7 c7971ff
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Thu May 10 16:42:21 2018 +0200
+
+    Merge branch 'master' of https://bitbucket.org/systinfo/systinfo
+
+commit 74c9ef7d2f60eedb0506218798106eaacf676e5b
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Thu May 10 16:40:53 2018 +0200
+
+    test cunit
+
+ stack/stack.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit c7971ffdea35745056e035064210e8fbb60c9e2d
+Merge: 99fcaab 08d1ef9
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Thu May 10 16:39:45 2018 +0200
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 99fcaabcd9261b7c65942926a9d63d381fa530d6
+Merge: 9b56812 6fd924b
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Thu May 10 16:39:36 2018 +0200
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 08d1ef9e62158ac173bba1f0d8b9f1a9ae7e4e01
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Thu May 10 16:39:31 2018 +0200
+
+    cunit test
+
+ stack/stack.c | 2 +-
+ tests/test.c  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 9b56812e949d91d5f1ced2365f03068add50a0c0
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Thu May 10 16:39:24 2018 +0200
+
+    Added error reporting + removed TODO's
+
+ inputs/input1 |  4 ++--
+ main.c        | 36 ++++++++++++++++++------------------
+ 2 files changed, 20 insertions(+), 20 deletions(-)
+
+commit 6fd924b2501aafdabc94662a4164741167b3ed80
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Thu May 10 16:36:07 2018 +0200
+
+    test
+
+ tests/test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 5c3d355208e9e4862a95562aace9b33b1c5cd6e3
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Thu May 10 16:34:46 2018 +0200
+
+    trying to fix cunit
+
+ libfractal/fractal.o | Bin 6768 -> 0 bytes
+ libfractal/tools.o   | Bin 12224 -> 0 bytes
+ tests/test           | Bin 22032 -> 0 bytes
+ tests/test.c         |   1 +
+ tests/test.o         | Bin 15816 -> 0 bytes
+ 5 files changed, 1 insertion(+)
+
+commit 6257d4248b6972e6d749bc4d43810f8373b1127f
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Thu May 10 16:32:45 2018 +0200
+
+    test
+
+ main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit fbc6282161e01d4d46acb002ea7d06c143aefaa4
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Thu May 10 16:27:36 2018 +0200
+
+    cunit fix
+
+ libfractal/fractal.o | Bin 0 -> 6768 bytes
+ libfractal/tools.o   | Bin 0 -> 12224 bytes
+ main.c               |   4 ++--
+ stack/stack.c        |   2 +-
+ tests/test           | Bin 0 -> 22032 bytes
+ tests/test.o         | Bin 0 -> 15816 bytes
+ 6 files changed, 3 insertions(+), 3 deletions(-)
+
+commit faf2ea3719c75b4c9c49372fe9b4ff46f375970e
+Merge: 58fa1f0 29e9c1f
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Thu May 10 16:18:27 2018 +0200
+
+    Merge branch 'master' of https://bitbucket.org/systinfo/systinfo
+
+commit 58fa1f0725b68c0ab96c284cd9d548f8b27269b5
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Thu May 10 16:17:58 2018 +0200
+
+    stack
+
+ main.c        |  2 +-
+ stack/stack.c | 21 +++++++++------------
+ 2 files changed, 10 insertions(+), 13 deletions(-)
+
+commit 29e9c1fd3ca580443a8dd589fa389beed163ad66
+Merge: ad04255 1c923af
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Thu May 10 16:13:35 2018 +0200
+
+    Merge remote-tracking branch 'origin/master'
+
+commit ad042556b32f6e80ac985f6cdb0a7c384fe07be8
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Thu May 10 16:13:25 2018 +0200
+
+    Added error reporting + removed TODO's
+
+ libfractal/fractal.c |  3 ---
+ main.c               | 25 ++++++++++++++-----------
+ 2 files changed, 14 insertions(+), 14 deletions(-)
+
+commit 1c923af456549ad3a909123566748cb2b23ce303
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Thu May 10 16:11:36 2018 +0200
+
+    stack init
+
+ stack/stack.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
+
+commit b6b066f2ef7e6bfc1d9e538a229ad1532fd87051
+Merge: 2c73116 1f79b27
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Thu May 10 16:06:42 2018 +0200
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 2c731166acf5b97cfc3fa9393ac2abb5ff12049e
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Thu May 10 16:06:27 2018 +0200
+
+    Changed output system
+
+ main.c | 32 +++++++++++++++++++++++++-------
+ 1 file changed, 25 insertions(+), 7 deletions(-)
+
+commit 1f79b27e5b9b83707d72c46496eafade9263ea35
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Thu May 10 15:51:46 2018 +0200
+
+    test
+
+ stack/stack.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 63d7e050dc1542d0d24486b05eac8b270bcc16f2
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Thu May 10 15:05:01 2018 +0200
+
+    test
+
+ tests/test.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
+
+commit 86eb920c1ffc7ef8a2bc6db0ff3aa07f67ecb95e
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Wed May 9 18:28:01 2018 +0200
+
+    makefile minor change
+
+ Makefile             |  11 +++++------
+ libfractal/fractal.o | Bin 6768 -> 0 bytes
+ libfractal/tools.o   | Bin 12224 -> 0 bytes
+ 3 files changed, 5 insertions(+), 6 deletions(-)
+
+commit 99361841ca8f77785fc3afc4ba408abb6a112d5f
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Wed May 9 18:21:56 2018 +0200
+
+    makefile + cunit + fclose
+
+ Makefile             |  20 ++++++++++++--------
+ libfractal/fractal.o | Bin 0 -> 6768 bytes
+ libfractal/tools.o   | Bin 0 -> 12224 bytes
+ main.c               |   2 +-
+ testProg             | Bin 8640 -> 0 bytes
+ 5 files changed, 13 insertions(+), 9 deletions(-)
+
+commit 8980adb48edbd52c33a9a35f0cf4f3e6f35e26c1
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Tue May 8 19:04:14 2018 +0200
+
+    End of day
+
+ main.c | 45 ++++++++++++++++-----------------------------
+ 1 file changed, 16 insertions(+), 29 deletions(-)
+
+commit ba05d2a69ab5043f58cbab470ba88ef89c984b78
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Tue May 8 18:08:47 2018 +0200
+
+    Changed fileReader
+
+ inputs/input1 |  4 +++-
+ main.c        | 28 +++++++++++++++-------------
+ 2 files changed, 18 insertions(+), 14 deletions(-)
+
+commit 79d4960f911844918d1cb62d10deeae48a1ee36d
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Tue May 8 17:34:19 2018 +0200
+
+    Before changing fileReader
+
+ beauty.bmp           | Bin 3000054 -> 0 bytes
+ fract11.bmp          | Bin 1920054 -> 0 bytes
+ inputs/input1        |  12 +++++++---
+ jerome.bmp           | Bin 6220854 -> 0 bytes
+ libfractal/fractal.h |   4 ++--
+ libfractal/fractal.o | Bin 6880 -> 0 bytes
+ libfractal/tools.o   | Bin 9192 -> 0 bytes
+ main.c               |  62 +++++++++++++++++++++------------------------------
+ stack/stack.c        |  32 +++++++++-----------------
+ stack/stack.h        |   1 -
+ 10 files changed, 48 insertions(+), 63 deletions(-)
+
+commit f14eeed5f6ed5ec2d92923b6ed1ca3dd4666c905
+Author: N van de Walle <vandewalleni@calrissian.info.ucl.ac.be>
+Date:   Tue May 8 14:19:50 2018 +0200
+
+    Removed segfault
+
+ beauty.bmp           | Bin 0 -> 3000054 bytes
+ fract11.bmp          | Bin 0 -> 1920054 bytes
+ jerome.bmp           | Bin 0 -> 6220854 bytes
+ libfractal/fractal.o | Bin 6776 -> 6880 bytes
+ libfractal/tools.o   | Bin 12224 -> 9192 bytes
+ main.c               |   8 ++++----
+ 6 files changed, 4 insertions(+), 4 deletions(-)
+
+commit be40ab7d2ad3ad11ea7c2970c0bced5d6f62f9a8
+Merge: a1474c9 f6ea5ed
+Author: Nicolas van de Walle <nicwalle.tuto@gmail.com>
+Date:   Sat May 5 18:12:15 2018 +0200
+
+    Merged test-branch into master
+
+commit f6ea5eda7dfba1a0474e2df96f7f8ed70deef6c2
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Sat May 5 18:11:14 2018 +0200
+
+    Max 1 time the same name
+
+ main.c        | 31 ++++++++++++++++++++++---------
+ stack/stack.c | 12 ++++++++++++
+ stack/stack.h |  2 ++
+ 3 files changed, 36 insertions(+), 9 deletions(-)
+
+commit a1474c9fe917a4a9d2501fa994b754f2d5b5d924
+Merge: f7a89c1 6526285
+Author: Nicolas van de Walle <nicwalle.tuto@gmail.com>
+Date:   Sat May 5 18:07:30 2018 +0200
+
+    Merged test-branch into master
+
+commit 652628534abee765dbddcd90da410a15e13ecd51
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Sat May 5 15:54:54 2018 +0200
+
+    Made program stop correctly
+
+ main.c | 67 ++++++++++++++++++++++++++++++++++--------------------------------
+ 1 file changed, 35 insertions(+), 32 deletions(-)
+
+commit f7a89c1e62cfd4cec5dc0a24bbc7251ea76e2204
+Merge: 618b777 788287d
+Author: Nicolas van de Walle <nicwalle.tuto@gmail.com>
+Date:   Sat May 5 12:55:11 2018 +0000
+
+    Merged in test-branch (pull request #1)
+    
+    Test branch
+
+commit 788287d468765f8b80d7d6515b8582da68c61067
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Sat May 5 14:53:37 2018 +0200
+
+    Finished computers
+
+ main.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 618b777b65e33399b7565abaa318a522a106a3c4
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Sat May 5 14:50:00 2018 +0200
+
+    temporary file
+
+ beauty.bmp             | Bin 3000054 -> 0 bytes
+ fract11.bmp            | Bin 1920054 -> 0 bytes
+ fractallllllllllll.bmp | Bin 750054 -> 0 bytes
+ jerome.bmp             | Bin 6220854 -> 0 bytes
+ 4 files changed, 0 insertions(+), 0 deletions(-)
+
+commit b6cee05b9faa34120a06a4e345dc1270e5367d28
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Sat May 5 14:48:42 2018 +0200
+
+    remove temporary file
+
+ beauty.bmp             | Bin 0 -> 3000054 bytes
+ fract11.bmp            | Bin 0 -> 1920054 bytes
+ fractallllllllllll.bmp | Bin 0 -> 750054 bytes
+ jerome.bmp             | Bin 0 -> 6220854 bytes
+ main.c                 |  23 +++++++++++++++--------
+ user_input.txt         |   1 -
+ 6 files changed, 15 insertions(+), 9 deletions(-)
+
+commit 8e145c2b23fdf9bbb2360640b127a6667b243bd0
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Sat May 5 14:47:23 2018 +0200
+
+    Finished computers
+
+ main.c | 34 ++++++++++++++++++++++++++++------
+ 1 file changed, 28 insertions(+), 6 deletions(-)
+
+commit 166f0a83a0316a660ef28532c93dc2d8d294dac9
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Sat May 5 14:40:06 2018 +0200
+
+    clean
+
+ beauty.bmp  | Bin 3000054 -> 0 bytes
+ fract11.bmp | Bin 1920054 -> 0 bytes
+ jerome.bmp  | Bin 6220854 -> 0 bytes
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 3d4f1106f7c58f8cbc9bffad07a51212f582cd9a
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Sat May 5 14:39:36 2018 +0200
+
+    remove temporary file
+
+ fractalJerome.bmp | Bin 750054 -> 0 bytes
+ main.c            |   8 ++++++++
+ user_input.txt    |   2 +-
+ 3 files changed, 9 insertions(+), 1 deletion(-)
+
+commit ea458d048db75eee128e32996307392b3ec9ae2d
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Sat May 5 14:28:59 2018 +0200
+
+    stdin user input -
+
+ Makefile             |   4 +++-
+ beauty.bmp           | Bin 0 -> 3000054 bytes
+ fract11.bmp          | Bin 0 -> 1920054 bytes
+ fractalJerome.bmp    | Bin 0 -> 750054 bytes
+ jerome.bmp           | Bin 0 -> 6220854 bytes
+ libfractal/fractal.o | Bin 0 -> 6776 bytes
+ libfractal/tools.o   | Bin 0 -> 12224 bytes
+ main.c               |  45 ++++++++++++++++++++++++++++++++++++++-------
+ user_input.txt       |   1 +
+ 9 files changed, 42 insertions(+), 8 deletions(-)
+
+commit c1fdb5169f0dcd8e0d38029688492b250bf8e7bb
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Wed May 2 17:46:18 2018 +0200
+
+    Added references
+
+ stack/stack.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit b6a2d9cf0b0c7f76e2ffa11783e40b9674a95e87
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Wed May 2 17:43:22 2018 +0200
+
+    Added flush
+
+ inputs/input3 |  2 ++
+ main.c        | 40 +++++++++++++++++++++++++++++++++-------
+ stack/stack.c |  9 ++++++++-
+ stack/stack.h |  9 +++++++++
+ tests/test.c  | 20 +++++++++++++++++---
+ 5 files changed, 69 insertions(+), 11 deletions(-)
+
+commit 08063eb631bcc677a1b7f72003cd6659e7c158a5
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Wed May 2 15:33:48 2018 +0200
+
+    Added test files + solved non-multithreading problem caused by lock
+
+ Makefile      |  1 +
+ inputs/input1 |  3 ++-
+ inputs/maxi   |  2 ++
+ inputs/mini   |  2 ++
+ main.c        | 50 +++++++++++++++++++++++++++-----------------------
+ 5 files changed, 34 insertions(+), 24 deletions(-)
+
+commit 977669ecc7da0bca8c2158a678caed2cd33d6382
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Wed May 2 14:51:47 2018 +0200
+
+    make now cleans the project, test ->tests
+
+ Makefile          |  19 ++++++-----
+ test/desktop.ini  | Bin 258 -> 0 bytes
+ test/test.c       |  92 ------------------------------------------------------
+ tests/desktop.ini | Bin 0 -> 258 bytes
+ tests/test.c      |  92 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 103 insertions(+), 100 deletions(-)
+
+commit c35b9b7eb062f11ce4728ed591c046ba4b2e80da
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Wed May 2 14:30:56 2018 +0200
+
+    Solved previous problem
+
+ inputs/input1 |  4 ++--
+ inputs/input2 |  5 ++---
+ main.c        | 22 ++++++++++++++++------
+ 3 files changed, 20 insertions(+), 11 deletions(-)
+
+commit d7c742b5efd0b6fa3901a57c3d4a09c9fd5af8bc
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Wed May 2 12:38:32 2018 +0200
+
+    Scheduler problem but multi-thread
+
+ Makefile      |   4 ++--
+ desktop.ini   | Bin 258 -> 0 bytes
+ inputs/input1 |   4 +---
+ inputs/input2 |   6 +++---
+ main.c        |  45 ++++++++++++++++++++++++++++++---------------
+ 5 files changed, 36 insertions(+), 23 deletions(-)
+
+commit 506470cef686d3ac80c29d065cdfb0cd2f367312
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Mon Apr 30 19:11:26 2018 +0200
+
+    Added threads (computer & filereader)
+
+ Makefile      |   2 +-
+ inputs/input2 |   4 +--
+ main.c        | 104 +++++++++++++++++++++++++++++++++++++++-------------------
+ stack/stack.c |  10 +++---
+ stack/stack.h |   4 +--
+ 5 files changed, 80 insertions(+), 44 deletions(-)
+
+commit 75499e734490d7fb884a203d81b37e588cf68eff
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Mon Apr 30 17:50:39 2018 +0200
+
+    test
+
+ tests/desktop.ini | Bin 258 -> 0 bytes
+ tests/tests.c     |  53 -----------------------------------------------------
+ 2 files changed, 53 deletions(-)
+
+commit 8723ea3d79f6ef7ce29fcc5dfb2c9dcb5d9bcd0d
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Mon Apr 30 17:49:03 2018 +0200
+
+    test
+
+ test/test.c | 51 ++++++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 42 insertions(+), 9 deletions(-)
+
+commit 6e5ec1b59aed09539308c5ab5d3cad0ebf74acd3
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Mon Apr 30 17:40:07 2018 +0200
+
+    Added the producer threads
+
+ libfractal/fractal.c |  9 +++++
+ main.c               | 92 ++++++++++++++++++++++++++++++++++++++++------------
+ stack/stack.c        | 15 +++++----
+ 3 files changed, 89 insertions(+), 27 deletions(-)
+
+commit e27da0d1762eeede78f3dae44e340e41744617d8
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Mon Apr 30 15:25:51 2018 +0200
+
+    cunit tests
+
+ Makefile    | 26 ++++++++++++++------------
+ test/test.c |  6 +++---
+ 2 files changed, 17 insertions(+), 15 deletions(-)
+
+commit 909bc51f57dd27327b0a715883baefe19deeda5d
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Sun Apr 29 21:15:23 2018 +0200
+
+    makefile tests
+
+ Makefile             |  29 ++++++++++++++++-------------
+ libfractal/fractal.o | Bin 6680 -> 0 bytes
+ libfractal/tools.o   | Bin 12224 -> 0 bytes
+ 3 files changed, 16 insertions(+), 13 deletions(-)
+
+commit 3ada1e40c7d5ef3450637962b42a1a09e71a1176
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Sun Apr 29 20:31:30 2018 +0200
+
+    makefile
+
+ Makefile             |  13 ++++++++-----
+ libfractal/fractal.c |   1 +
+ libfractal/fractal.o | Bin 6640 -> 6680 bytes
+ stack/stack.c        |   1 -
+ test/test.c          |  12 +++++++++---
+ testProg             | Bin 8640 -> 8640 bytes
+ 6 files changed, 18 insertions(+), 9 deletions(-)
+
+commit 16341c888f4126ed1711b6cec18883e97f1a36dd
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Sun Apr 29 18:42:14 2018 +0200
+
+    cunit
+
+ Makefile    |  14 ++++----------
+ test/test.o | Bin 10304 -> 0 bytes
+ testProg    | Bin 0 -> 8640 bytes
+ 3 files changed, 4 insertions(+), 10 deletions(-)
+
+commit ddd76d891c35a6431c0d7e3ca2b300752480646e
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Sun Apr 29 18:25:09 2018 +0200
+
+    cunit
+
+ Makefile    |  15 ++++++++++-----
+ test/test.c |   2 +-
+ test/test.o | Bin 0 -> 10304 bytes
+ 3 files changed, 11 insertions(+), 6 deletions(-)
+
+commit 93f2473924d73e14dbc37aac48dda662b54008dc
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Sun Apr 29 17:24:20 2018 +0200
+
+    cunit
+
+ Makefile             |   6 +++++-
+ libfractal/fractal.o | Bin 0 -> 6640 bytes
+ libfractal/tools.o   | Bin 0 -> 12224 bytes
+ test/desktop.ini     | Bin 0 -> 258 bytes
+ test/test.c          |  53 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 58 insertions(+), 1 deletion(-)
+
+commit 5eacc13fd12544022269968ebfa14ad0fa8f4e03
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Sun Apr 29 16:38:33 2018 +0200
+
+    cunit
+
+ Makefile        |  2 ++
+ tests/fractal.c |  7 -------
+ tests/tests.c   | 53 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 55 insertions(+), 7 deletions(-)
+
+commit 49a758c06b54e07bbdc2e4b39ddb72cb0a8a8823
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Sun Apr 29 16:13:14 2018 +0200
+
+    cunit
+
+ tests/fractal.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+commit 6fcc616ed2be25f099b3e51fd1f52768c558062a
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Sun Apr 29 15:21:39 2018 +0200
+
+    Updated .gitignore
+
+ .gitignore | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+commit cd9c14fdeb152bf22cc8b2015a476d781ceaaf34
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Sun Apr 29 15:19:49 2018 +0200
+
+    Fixed MakeFile
+
+ Makefile                |   4 ++--
+ libfractal/libfractal.a | Bin 16298 -> 0 bytes
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit d78926b42289fe66677e515d79d8e80f135953e6
+Merge: 7bf06e4 d227fd6
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Sun Apr 29 15:13:06 2018 +0200
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 7bf06e477fbbef841bda44f6f5f6964b621ab3d0
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Sun Apr 29 15:12:57 2018 +0200
+
+    removed lib and object
+
+ main.o        | Bin 13856 -> 0 bytes
+ stack/stack.a | Bin 7070 -> 0 bytes
+ stack/stack.o | Bin 6920 -> 0 bytes
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit d227fd64688e26ed82ccf9a5d81e2297243221a7
+Author: Nicolas van de Walle <nicwalle.tuto@gmail.com>
+Date:   Sun Apr 29 13:12:26 2018 +0000
+
+    main.o deleted online with Bitbucket
+
+ main.o | Bin 13856 -> 0 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit fcacab350ed9051a5252c02d21a5864ee99335b2
+Merge: 4cf19b0 e7299ba
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Sun Apr 29 15:11:30 2018 +0200
+
+    Merge remote-tracking branch 'origin/master'
+    
+    # Conflicts:
+    #	main.o
+
+commit e7299baf04baec6d238e2e2a317b6b495e82044c
+Author: Nicolas van de Walle <nicwalle.tuto@gmail.com>
+Date:   Sun Apr 29 13:11:04 2018 +0000
+
+    main deleted online with Bitbucket
+
+ main | Bin 1390144 -> 0 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 4cf19b0c315c16a0e1887993b4a690d49c154012
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Sun Apr 29 15:10:18 2018 +0200
+
+    renamed inputs
+
+ inputs/input1 | 4 ++++
+ inputs/input2 | 5 +++++
+ inputs/list1  | 4 ----
+ inputs/list2  | 5 -----
+ 4 files changed, 9 insertions(+), 9 deletions(-)
+
+commit 4448fe6f9a090e23a7e523a2874f9360847f2058
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Sun Apr 29 15:00:29 2018 +0200
+
+    gitignore
+
+ .gitignore   |   4 +++-
+ inputs/list2 |   5 +++++
+ main.c       |  11 +++++++++--
+ main.o       | Bin 10776 -> 0 bytes
+ 4 files changed, 17 insertions(+), 3 deletions(-)
+
+commit 74224790030748905f714803436ce3d894175c77
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Sun Apr 29 14:59:31 2018 +0200
+
+    stack
+
+ inputs/input1 | 4 ++++
+ inputs/list1  | 4 ----
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+commit ab560dd094bc6a239dc17286201dfb5f258fa8a4
+Merge: 334d1b0 293d3ea
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Sun Apr 29 14:52:04 2018 +0200
+
+    Merge branch 'master' of https://bitbucket.org/systinfo/systinfo
+
+commit 334d1b02ffc94da844ce5a2b64752ad293b08941
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Sun Apr 29 14:48:44 2018 +0200
+
+    input
+
+ Makefile       |  27 ++++++++++++++-------------
+ main           | Bin 0 -> 1390144 bytes
+ main.o         | Bin 10776 -> 13856 bytes
+ stack/MakeFile |  15 ---------------
+ stack/stack.a  | Bin 0 -> 7070 bytes
+ stack/stack.c  |   4 ++--
+ stack/stack.h  |   4 ++--
+ stack/stack.o  | Bin 0 -> 6920 bytes
+ 8 files changed, 18 insertions(+), 32 deletions(-)
+
+commit 293d3ead1f8d0a60b1abcd6a5cf6ea85926632b6
+Merge: 7a09e66 935854b
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Sun Apr 29 14:47:31 2018 +0200
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 7a09e66842e65a1ca5a86ac8c0c22e86ec8e911c
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Sun Apr 29 14:44:13 2018 +0200
+
+    Fixed error in fractal.c (malloc error) + improved filereader
+
+ inputs/list1         | 2 +-
+ libfractal/fractal.c | 3 ++-
+ main.c               | 4 ++--
+ 3 files changed, 5 insertions(+), 4 deletions(-)
+
+commit 935854bb57aa72eff01ab95299fd97eea369582a
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Sun Apr 29 14:40:28 2018 +0200
+
+    stack
+
+ stack/Makefile | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+commit 4698f62d9d3d34c6f1e4a1466208c16c47ef08a4
+Merge: 8cbaeec 405cb41
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Sun Apr 29 14:38:26 2018 +0200
+
+    Merge branch 'master' of https://bitbucket.org/systinfo/systinfo
+
+commit 8cbaeec28c20d7519fe0d8559fdf7b72ccc9111f
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Sun Apr 29 14:34:01 2018 +0200
+
+    stack
+
+ main.o               | Bin 0 -> 10776 bytes
+ stack/MakeFile       |  15 +++++++++++++++
+ stack/stack.c        |  23 +++++++++++++++++++++++
+ stack/stack.h        |  37 +++++++++++++++++++++++++++++++++++++
+ stack/stack/MakeFile |  15 ---------------
+ stack/stack/stack.c  |  25 -------------------------
+ stack/stack/stack.h  |  37 -------------------------------------
+ 7 files changed, 75 insertions(+), 77 deletions(-)
+
+commit 405cb41ddf9895664e91b619afe4e9b347cf8915
+Merge: 8133278 8fe3d7b
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Sun Apr 29 14:25:45 2018 +0200
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 8133278f1b99b00a1bc3c911580562f1768f9298
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Sun Apr 29 14:25:33 2018 +0200
+
+    Started ed error from previous commit (f196eab)
+
+ Makefile | 2 +-
+ main.c   | 9 +++++----
+ 2 files changed, 6 insertions(+), 5 deletions(-)
+
+commit 8fe3d7beb1cd263dc658f3c039b89b547222d3ba
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Sun Apr 29 14:18:37 2018 +0200
+
+    update
+
+ stack/stack0/stack.c              | 2 --
+ stack/stack0/stack.h              | 0
+ stack/stack0/stack/stack.c        | 2 --
+ stack/stack0/stack/stack.h        | 0
+ stack/stack1/stack.c              | 2 --
+ stack/stack1/stack.h              | 0
+ stack/stack1/stack/stack.c        | 2 --
+ stack/stack1/stack/stack.h        | 0
+ stack/stack1/stack0/stack.c       | 2 --
+ stack/stack1/stack0/stack.h       | 0
+ stack/stack1/stack0/stack/stack.c | 2 --
+ stack/stack1/stack0/stack/stack.h | 0
+ 12 files changed, 12 deletions(-)
+
+commit fd14abe3e51c2edae02d3529884aa01650a968df
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Sun Apr 29 12:53:17 2018 +0200
+
+    status
+
+ stack/stack/MakeFile              | 15 +++++++++++++++
+ stack/stack/stack.c               | 25 +++++++++++++++++++++++++
+ stack/stack/stack.h               | 37 +++++++++++++++++++++++++++++++++++++
+ stack/stack0/stack.c              |  2 ++
+ stack/stack0/stack.h              |  0
+ stack/stack0/stack/stack.c        |  2 ++
+ stack/stack0/stack/stack.h        |  0
+ stack/stack1/stack.c              |  2 ++
+ stack/stack1/stack.h              |  0
+ stack/stack1/stack/stack.c        |  2 ++
+ stack/stack1/stack/stack.h        |  0
+ stack/stack1/stack0/stack.c       |  2 ++
+ stack/stack1/stack0/stack.h       |  0
+ stack/stack1/stack0/stack/stack.c |  2 ++
+ stack/stack1/stack0/stack/stack.h |  0
+ 15 files changed, 89 insertions(+)
+
+commit f196eab247ee4eb98407dbaa86046a20b75adb86
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Sun Apr 29 12:30:28 2018 +0200
+
+    Started filereader
+    
+    NOTE : ERROR IN THE MAKEFILE, LINKING WITH FRACTAL LIBRARY NOT FUNCTIONNING, UNABLE TO USE THE FRACTAL FUNCTIONS
+
+ Makefile     |  3 +++
+ inputs/list1 |  1 +
+ main.c       | 53 +++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 3 files changed, 55 insertions(+), 2 deletions(-)
+
+commit cd47780a7622085c4f6050c2fc9354a3c3024905
+Merge: 1d2c35a c6e0d20
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Sun Apr 29 11:42:06 2018 +0200
+
+    Merge remote-tracking branch 'origin/master'
+
+commit 1d2c35ab1486ff624e10e49b4d926e529b985cf6
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Sun Apr 29 11:41:44 2018 +0200
+
+    Added ui elements in code and makefile
+
+ Makefile |  9 +++++----
+ main.c   | 50 +++++++++++++++++++++++++++++++++++++++++---------
+ 2 files changed, 46 insertions(+), 13 deletions(-)
+
+commit c6e0d2038d9dd6b59d40e707269f449df4b6c04b
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Sun Apr 29 11:37:38 2018 +0200
+
+    working on stack.c inspired by inginious exercice
+
+ stack/stack.h | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 587937761543986b78d6c7f66e5b1afaefe2f8d3
+Merge: eda9b89 08d50df
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Sun Apr 29 10:32:23 2018 +0200
+
+    Merge remote-tracking branch 'origin/master'
+
+commit eda9b89738ab65ea7ad601d5b2008b37ea8d1805
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Sun Apr 29 10:30:49 2018 +0200
+
+    Started file reading threads
+
+ main.c | 43 ++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 40 insertions(+), 3 deletions(-)
+
+commit 08d50df1b38f5d65d631857f88859e05aca067e1
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Sun Apr 29 10:30:49 2018 +0200
+
+    Started file reading threads
+
+ main.c | 41 +++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 39 insertions(+), 2 deletions(-)
+
+commit 661ad4aac789d5ddf08f603b3972b92a53c4859c
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Thu Apr 26 10:28:43 2018 +0200
+
+    fixed some small issues
+
+ libfractal/fractal.c    |   2 +-
+ libfractal/libfractal.a | Bin 16226 -> 16298 bytes
+ main.c                  |   9 ++++-----
+ 3 files changed, 5 insertions(+), 6 deletions(-)
+
+commit 21f348294049b332b7e984ca4a96650dbe5f55ee
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Thu Apr 26 09:32:58 2018 +0200
+
+    Added comments
+
+ main.c | 35 ++++++++++++++++++++++++++++-------
+ 1 file changed, 28 insertions(+), 7 deletions(-)
+
+commit 3f7172868e98193a3197242caa821c86bbcc6e2b
+Author: Nicolas van de Walle <dev.nw@walle.be>
+Date:   Thu Apr 26 09:04:32 2018 +0200
+
+    Fixed an issue concerning the strcmp() == 0
+
+ cmake-build-debug/CMakeCache.txt                   |  99 ++--
+ .../CMakeFiles/3.10.2/CMakeCCompiler.cmake         |  73 ---
+ .../3.10.2/CMakeDetermineCompilerABI_C.bin         | Bin 156031 -> 0 bytes
+ .../CMakeFiles/3.10.2/CMakeRCCompiler.cmake        |   6 -
+ .../CMakeFiles/3.10.2/CMakeSystem.cmake            |  15 -
+ .../3.10.2/CompilerIdC/CMakeCCompilerId.c          | 598 ---------------------
+ .../CMakeFiles/3.10.2/CompilerIdC/a.exe            | Bin 156659 -> 0 bytes
+ .../CMakeFiles/3.10.2/CompilerIdC/desktop.ini      | Bin 258 -> 0 bytes
+ .../CMakeFiles/3.10.2/CompilerIdC/tmp/desktop.ini  | Bin 258 -> 0 bytes
+ cmake-build-debug/CMakeFiles/3.10.2/desktop.ini    | Bin 258 -> 0 bytes
+ .../CMakeFiles/CMakeDirectoryInformation.cmake     |   4 +-
+ cmake-build-debug/CMakeFiles/CMakeOutput.log       | 271 +++++-----
+ cmake-build-debug/CMakeFiles/CMakeTmp/desktop.ini  | Bin 258 -> 0 bytes
+ cmake-build-debug/CMakeFiles/Makefile.cmake        |  93 +++-
+ cmake-build-debug/CMakeFiles/Makefile2             |  14 +-
+ cmake-build-debug/CMakeFiles/TargetDirectories.txt |   6 +-
+ cmake-build-debug/CMakeFiles/clion-environment.txt | Bin 135 -> 19 bytes
+ cmake-build-debug/CMakeFiles/clion-log.txt         |  11 +-
+ .../CMakeFiles/code.dir/DependInfo.cmake           |   2 +-
+ cmake-build-debug/CMakeFiles/code.dir/build.make   |  28 +-
+ .../CMakeFiles/code.dir/cmake_clean.cmake          |   3 +-
+ cmake-build-debug/CMakeFiles/code.dir/depend.make  |   7 +-
+ cmake-build-debug/CMakeFiles/code.dir/desktop.ini  | Bin 258 -> 0 bytes
+ cmake-build-debug/CMakeFiles/code.dir/flags.make   |   2 +-
+ cmake-build-debug/CMakeFiles/code.dir/link.txt     |   2 +-
+ cmake-build-debug/CMakeFiles/desktop.ini           | Bin 258 -> 0 bytes
+ cmake-build-debug/CMakeFiles/feature_tests.bin     | Bin 155994 -> 8592 bytes
+ cmake-build-debug/Makefile                         |  16 +-
+ cmake-build-debug/cmake_install.cmake              |   9 +-
+ cmake-build-debug/code.cbp                         |  70 +--
+ libfractal/fractal.c                               |   2 +-
+ libfractal/libfractal.a                            | Bin 19042 -> 16226 bytes
+ main                                               | Bin 810880 -> 0 bytes
+ main.c                                             |   7 +-
+ main.o                                             | Bin 6688 -> 0 bytes
+ 35 files changed, 330 insertions(+), 1008 deletions(-)
+
+commit 161bba36df3228a21d979d4fc78d0a7a439bd7ca
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Sat Apr 21 12:05:47 2018 +0200
+
+    ajout gdb au makefile,modification de la librarie fractale, ajout d'une classe stack
+
+ Makefile             |  10 ++++++++--
+ inputs/list1         |   3 +++
+ libfractal/fractal.c |   2 ++
+ libfractal/fractal.h |   9 +++++----
+ main                 | Bin 810848 -> 810880 bytes
+ main.c               |  19 ++++++++++++++-----
+ main.o               | Bin 6424 -> 6688 bytes
+ stack/stack.c        |   2 ++
+ 8 files changed, 34 insertions(+), 11 deletions(-)
+
+commit d07b31c7344723feed5d9e76121be9fa22f1165f
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Sat Apr 21 09:18:51 2018 +0200
+
+    compilation errors
+
+ Makefile                |   2 +-
+ libfractal/fractal.o    | Bin 8143 -> 0 bytes
+ libfractal/libfractal.a | Bin 0 -> 19042 bytes
+ main                    | Bin 0 -> 810848 bytes
+ main.c                  |  11 ++++++-----
+ main.o                  | Bin 5876 -> 6424 bytes
+ 6 files changed, 7 insertions(+), 6 deletions(-)
+
+commit a6a59284312b065a8775e7bb26d619b9ba4e587c
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Fri Apr 20 21:34:24 2018 +0200
+
+    supression erreurs de compilation
+
+ inputs/list1 | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 7fa1986ec80a0d5358306b7df977e19246cd9395
+Author: Nicolas van de Walle <nicolas@walle.be>
+Date:   Thu Apr 19 18:07:11 2018 +0200
+
+    Started Makefile
+
+ Makefile                                          |  21 ++++++++++++++-
+ cmake-build-debug/CMakeFiles/code.dir/depend.make |   7 +++--
+ libfractal/fractal.c                              |   5 ++--
+ libfractal/fractal.o                              | Bin 0 -> 8143 bytes
+ main.c                                            |  31 ++++++++++++++++++----
+ main.o                                            | Bin 0 -> 5876 bytes
+ 6 files changed, 54 insertions(+), 10 deletions(-)
+
+commit 2b9a670d8e43e9011e530ea80d2bb8fd035e066b
+Author: Nicolas van de Walle <nicolas@walle.be>
+Date:   Thu Apr 19 15:16:14 2018 +0200
+
+    Filled the fractal.c file
+
+ .gitignore                                         |   1 +
+ cmake-build-debug/CMakeCache.txt                   | 337 ++++++++++++
+ .../CMakeFiles/3.10.2/CMakeCCompiler.cmake         |  73 +++
+ .../3.10.2/CMakeDetermineCompilerABI_C.bin         | Bin 0 -> 156031 bytes
+ .../CMakeFiles/3.10.2/CMakeRCCompiler.cmake        |   6 +
+ .../CMakeFiles/3.10.2/CMakeSystem.cmake            |  15 +
+ .../3.10.2/CompilerIdC/CMakeCCompilerId.c          | 598 +++++++++++++++++++++
+ .../CMakeFiles/3.10.2/CompilerIdC/a.exe            | Bin 0 -> 156659 bytes
+ .../CMakeFiles/3.10.2/CompilerIdC/desktop.ini      | Bin 0 -> 258 bytes
+ .../CMakeFiles/3.10.2/CompilerIdC/tmp/desktop.ini  | Bin 0 -> 258 bytes
+ cmake-build-debug/CMakeFiles/3.10.2/desktop.ini    | Bin 0 -> 258 bytes
+ .../CMakeFiles/CMakeDirectoryInformation.cmake     |  16 +
+ cmake-build-debug/CMakeFiles/CMakeOutput.log       | 215 ++++++++
+ cmake-build-debug/CMakeFiles/CMakeTmp/desktop.ini  | Bin 0 -> 258 bytes
+ cmake-build-debug/CMakeFiles/Makefile.cmake        |  48 ++
+ cmake-build-debug/CMakeFiles/Makefile2             | 108 ++++
+ cmake-build-debug/CMakeFiles/TargetDirectories.txt |   3 +
+ cmake-build-debug/CMakeFiles/clion-environment.txt | Bin 0 -> 135 bytes
+ cmake-build-debug/CMakeFiles/clion-log.txt         |   4 +
+ cmake-build-debug/CMakeFiles/cmake.check_cache     |   1 +
+ .../CMakeFiles/code.dir/DependInfo.cmake           |  20 +
+ cmake-build-debug/CMakeFiles/code.dir/build.make   | 113 ++++
+ .../CMakeFiles/code.dir/cmake_clean.cmake          |  11 +
+ cmake-build-debug/CMakeFiles/code.dir/depend.make  |   2 +
+ cmake-build-debug/CMakeFiles/code.dir/desktop.ini  | Bin 0 -> 258 bytes
+ cmake-build-debug/CMakeFiles/code.dir/flags.make   |  10 +
+ cmake-build-debug/CMakeFiles/code.dir/link.txt     |   1 +
+ .../CMakeFiles/code.dir/progress.make              |   3 +
+ cmake-build-debug/CMakeFiles/desktop.ini           | Bin 0 -> 258 bytes
+ cmake-build-debug/CMakeFiles/feature_tests.bin     | Bin 0 -> 155994 bytes
+ cmake-build-debug/CMakeFiles/feature_tests.c       |  34 ++
+ cmake-build-debug/CMakeFiles/progress.marks        |   1 +
+ cmake-build-debug/Makefile                         | 178 ++++++
+ cmake-build-debug/cmake_install.cmake              |  44 ++
+ cmake-build-debug/code.cbp                         |  84 +++
+ cmake-build-debug/desktop.ini                      | Bin 0 -> 258 bytes
+ libfractal/fractal.c                               |  45 +-
+ libfractal/fractal.h                               |   8 +-
+ tests/fractal.c                                    |   0
+ 39 files changed, 1959 insertions(+), 20 deletions(-)
+
+commit d752c1031354c16dfad390c515a98f9fb8d8372a
+Author: Nicolas van de Walle <nicolas@walle.be>
+Date:   Thu Apr 19 14:58:04 2018 +0200
+
+    Added the CMakeLists.txt file + struct fractal
+
+ CMakeLists.txt            | 6 ++++++
+ libfractal/CMakeLists.txt | 0
+ libfractal/fractal.h      | 9 ++++++++-
+ test.c                    | 0
+ 4 files changed, 14 insertions(+), 1 deletion(-)
+
+commit 3062fc7022c4c9f2e3c1348396b28386a14cf3f3
+Author: Jerome Van Der Elst <jerome.vanderelst@student.uclouvain.be>
+Date:   Thu Apr 19 14:28:07 2018 +0200
+
+    Test
+
+ main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 6fb9d53b6d482b243b11652391736f6620a8579b
+Author: Nicolas van de Walle <nicolas@walle.be>
+Date:   Thu Apr 19 14:16:56 2018 +0200
+
+    First commit
+
+ .gitignore             |   1 +
+ Makefile               |   1 +
+ desktop.ini            | Bin 0 -> 258 bytes
+ libfractal/Makefile    |  15 +++++++
+ libfractal/desktop.ini | Bin 0 -> 258 bytes
+ libfractal/fractal.c   |  54 ++++++++++++++++++++++++
+ libfractal/fractal.h   | 112 +++++++++++++++++++++++++++++++++++++++++++++++++
+ libfractal/tools.c     | 103 +++++++++++++++++++++++++++++++++++++++++++++
+ main.c                 |  11 +++++
+ tests/desktop.ini      | Bin 0 -> 258 bytes
+ 10 files changed, 297 insertions(+)
