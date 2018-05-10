@@ -40,7 +40,7 @@ void fractal_free(struct fractal *f)
 {
     free(f->values);
     //free(f->name);
-    free(f);
+    //free(f);
 }
 
 const char *fractal_get_name(const struct fractal *f)
