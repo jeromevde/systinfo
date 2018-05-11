@@ -3,8 +3,8 @@ GCC = gcc
 CFLAGS = -g -Wall -W -std=c99
 LDFLAGS = -lm -lSDL -lpthread
 
-LCUNIT= -L$(HOME)/local/lib -lcunit
-CCUNIT = -I$(HOME)/local/include -lcunit
+LCUNIT= -L/usr/local/lib -lcunit
+CCUNIT = -I/usr/local/include -lcunit
 
 LIBFRACTAL = libfractal/libfractal.a
 LIBSTACK = stack/stack.a
